@@ -1,9 +1,8 @@
-
 import React from 'react';
 
 const Hero = () => {
   return (
-    <section className="bg-[url('/placeholder.svg')] bg-cover bg-center bg-no-repeat relative min-h-[80vh] flex items-center">
+    <section className="bg-[url('https://images.unsplash.com/photo-1639762681485-074b7f938ba0')] bg-cover bg-center bg-no-repeat relative min-h-[80vh] flex items-center">
       <div className="absolute inset-0 bg-primary/80" />
       <div className="container mx-auto px-4 py-16 relative z-10">
         <div className="max-w-3xl mx-auto text-center text-white">

@@ -19,7 +19,7 @@ const Whitepaper = () => {
           <CardContent className="p-8 flex flex-col items-center">
             <div className="w-40 h-56 bg-muted rounded-md mb-6 overflow-hidden">
               <img 
-                src="/placeholder.svg"
+                src="https://images.unsplash.com/photo-1554774853-719586f82d77"
                 alt="VueCoin Whitepaper"
                 className="w-full h-full object-cover"
               />

@@ -35,22 +35,22 @@ const Sectors = () => {
           <SectorCard 
             title="Publicité" 
             description="VueAd Network révolutionne l'écosystème publicitaire en créant une plateforme décentralisée qui relie annonceurs, éditeurs et consommateurs." 
-            imageUrl="/placeholder.svg" 
+            imageUrl="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
           />
           <SectorCard 
             title="Immobilier-BTP" 
             description="VueRealty Platform permet la tokenisation d'actifs immobiliers, le fractionnement de propriété accessible et des smart contracts pour transactions automatisées." 
-            imageUrl="/placeholder.svg" 
+            imageUrl="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab"
           />
           <SectorCard 
             title="Transport" 
             description="VueTransit System offre une plateforme unifiée pour le transport de personnes et marchandises, avec traçabilité logistique de bout en bout." 
-            imageUrl="/placeholder.svg" 
+            imageUrl="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d"
           />
           <SectorCard 
             title="E-Commerce" 
             description="VueMarket est une plateforme e-commerce décentralisée avec paiements sécurisés en VueCoin et système d'escrow automatisé." 
-            imageUrl="/placeholder.svg" 
+            imageUrl="https://images.unsplash.com/photo-1563013544-824ae1b704d3"
           />
         </div>
       </div>

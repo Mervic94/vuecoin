@@ -42,22 +42,22 @@ const Team = () => {
           <TeamMember 
             name="Alexandre Martin" 
             role="CEO & Fondateur" 
-            imageUrl="/placeholder.svg" 
+            imageUrl="https://images.unsplash.com/photo-1560250097-0b93528c311a" 
           />
           <TeamMember 
             name="Marie Dubois" 
             role="CTO & Experte Blockchain" 
-            imageUrl="/placeholder.svg" 
+            imageUrl="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e" 
           />
           <TeamMember 
             name="Thomas Legrand" 
             role="Responsable Immobilier-BTP" 
-            imageUrl="/placeholder.svg" 
+            imageUrl="https://images.unsplash.com/photo-1556157382-97eda2d62296" 
           />
           <TeamMember 
             name="Sophie Moreau" 
             role="Directrice Marketing & Publicité" 
-            imageUrl="/placeholder.svg" 
+            imageUrl="https://images.unsplash.com/photo-1580489944761-15a19d654956" 
           />
         </div>
       </div>
