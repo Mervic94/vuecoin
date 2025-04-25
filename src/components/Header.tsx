@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import Logo from './Logo';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,6 +32,15 @@ const Header = () => {
             <li><a href="#roadmap" className="hover:text-accent transition-colors">Feuille de Route</a></li>
             <li><a href="#whitepaper" className="hover:text-accent transition-colors">Livre Blanc</a></li>
             <li><a href="#contact" className="hover:text-accent transition-colors">Contact</a></li>
+            <li>
+              <Button 
+                variant="outline" 
+                className="border-white text-white hover:bg-white hover:text-primary"
+                asChild
+              >
+                <Link to="/exchange">Plateforme d'échange</Link>
+              </Button>
+            </li>
           </ul>
         </nav>
 
@@ -44,6 +54,16 @@ const Header = () => {
               <li><a href="#roadmap" className="block py-2 hover:text-accent transition-colors" onClick={() => setIsMenuOpen(false)}>Feuille de Route</a></li>
               <li><a href="#whitepaper" className="block py-2 hover:text-accent transition-colors" onClick={() => setIsMenuOpen(false)}>Livre Blanc</a></li>
               <li><a href="#contact" className="block py-2 hover:text-accent transition-colors" onClick={() => setIsMenuOpen(false)}>Contact</a></li>
+              <li>
+                <Button 
+                  variant="outline" 
+                  className="border-white text-white hover:bg-white hover:text-primary w-full mt-2"
+                  asChild
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Link to="/exchange">Plateforme d'échange</Link>
+                </Button>
+              </li>
             </ul>
           </div>
         )}
