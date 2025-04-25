@@ -17,12 +17,13 @@ const Whitepaper = () => {
 
         <Card className="max-w-md mx-auto border-none shadow-xl">
           <CardContent className="p-8 flex flex-col items-center">
-            <div className="w-40 h-56 bg-muted rounded-md mb-6 overflow-hidden">
+            <div className="w-40 h-56 bg-muted rounded-md mb-6 overflow-hidden relative">
               <img 
-                src="https://images.unsplash.com/photo-1554774853-719586f82d77"
-                alt="VueCoin Whitepaper"
-                className="w-full h-full object-cover"
+                src="/lovable-uploads/f14ac3df-4827-42eb-8071-0f5d18bbee9d.png"
+                alt="VueCoin Logo"
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24"
               />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-muted/20" />
             </div>
             
             <h3 className="text-2xl font-bold text-primary mb-4">Livre Blanc VueCoin</h3>

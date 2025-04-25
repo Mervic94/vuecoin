@@ -17,7 +17,7 @@ const Tokenomics = () => {
           <div className="w-full max-w-md mb-8">
             <div className="aspect-square bg-muted rounded-lg overflow-hidden">
               <img 
-                src="/placeholder.svg" 
+                src="https://images.unsplash.com/photo-1518770660439-4636190af475" 
                 alt="VueCoin Distribution" 
                 className="w-full h-full object-cover"
               />
