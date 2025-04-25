@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Download } from "lucide-react";
+import { Download, ExternalLink } from "lucide-react";
 
 const Whitepaper = () => {
   return (
@@ -17,13 +17,12 @@ const Whitepaper = () => {
 
         <Card className="max-w-md mx-auto border-none shadow-xl">
           <CardContent className="p-8 flex flex-col items-center">
-            <div className="w-40 h-56 bg-muted rounded-md mb-6 overflow-hidden relative">
+            <div className="w-40 h-56 bg-muted rounded-md mb-6 overflow-hidden flex items-center justify-center">
               <img 
                 src="/lovable-uploads/f14ac3df-4827-42eb-8071-0f5d18bbee9d.png"
                 alt="VueCoin Logo"
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-24 h-24"
+                className="w-32 h-32"
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-muted/20" />
             </div>
             
             <h3 className="text-2xl font-bold text-primary mb-4">Livre Blanc VueCoin</h3>
@@ -32,9 +31,21 @@ const Whitepaper = () => {
               le modèle économique et la feuille de route de VueCoin.
             </p>
             
-            <Button className="primary-btn bg-accent text-primary hover:bg-accent/80" size="lg">
-              <Download className="mr-2 h-4 w-4" /> Télécharger le PDF
-            </Button>
+            <div className="flex flex-col w-full gap-4">
+              <Button className="w-full bg-accent text-primary hover:bg-accent/80" size="lg">
+                <Download className="mr-2 h-4 w-4" /> Télécharger le PDF
+              </Button>
+              
+              <Button
+                className="w-full"
+                variant="outline"
+                size="lg"
+                onClick={() => window.open('/exchange', '_blank')}
+              >
+                <ExternalLink className="mr-2 h-4 w-4" />
+                Accéder à la plateforme d'échange
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
