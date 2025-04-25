@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, LogOut } from "lucide-react";
+import { Menu, LogOut, User, History, HelpCircle } from "lucide-react";
 import Logo from './Logo';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -31,21 +32,51 @@ const Header = () => {
           </Button>
 
           <ul className="hidden md:flex space-x-6 items-center">
-            <li><a href="#about" className="hover:text-accent transition-colors">À Propos</a></li>
-            <li><a href="#sectors" className="hover:text-accent transition-colors">Secteurs</a></li>
-            <li><a href="#features" className="hover:text-accent transition-colors">Caractéristiques</a></li>
-            <li><a href="#roadmap" className="hover:text-accent transition-colors">Feuille de Route</a></li>
-            <li><a href="#whitepaper" className="hover:text-accent transition-colors">Livre Blanc</a></li>
-            <li><a href="#contact" className="hover:text-accent transition-colors">Contact</a></li>
             {user ? (
               <>
                 <li>
                   <Button 
-                    variant="outline" 
+                    variant="outline"
                     className="border-white text-white hover:bg-white hover:text-primary"
                     asChild
                   >
                     <Link to="/exchange">Plateforme d'échange</Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button 
+                    variant="outline"
+                    className="border-white text-white hover:bg-white hover:text-primary"
+                    asChild
+                  >
+                    <Link to="/transactions">
+                      <History className="mr-2 h-4 w-4" />
+                      Historique
+                    </Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button 
+                    variant="outline"
+                    className="border-white text-white hover:bg-white hover:text-primary"
+                    asChild
+                  >
+                    <Link to="/profile">
+                      <User className="mr-2 h-4 w-4" />
+                      Profil
+                    </Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button 
+                    variant="outline"
+                    className="border-white text-white hover:bg-white hover:text-primary"
+                    asChild
+                  >
+                    <Link to="/help">
+                      <HelpCircle className="mr-2 h-4 w-4" />
+                      Aide
+                    </Link>
                   </Button>
                 </li>
                 <li>
@@ -76,12 +107,6 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 animate-fade-in">
             <ul className="flex flex-col space-y-4">
-              <li><a href="#about" className="block py-2 hover:text-accent transition-colors" onClick={() => setIsMenuOpen(false)}>À Propos</a></li>
-              <li><a href="#sectors" className="block py-2 hover:text-accent transition-colors" onClick={() => setIsMenuOpen(false)}>Secteurs</a></li>
-              <li><a href="#features" className="block py-2 hover:text-accent transition-colors" onClick={() => setIsMenuOpen(false)}>Caractéristiques</a></li>
-              <li><a href="#roadmap" className="block py-2 hover:text-accent transition-colors" onClick={() => setIsMenuOpen(false)}>Feuille de Route</a></li>
-              <li><a href="#whitepaper" className="block py-2 hover:text-accent transition-colors" onClick={() => setIsMenuOpen(false)}>Livre Blanc</a></li>
-              <li><a href="#contact" className="block py-2 hover:text-accent transition-colors" onClick={() => setIsMenuOpen(false)}>Contact</a></li>
               {user ? (
                 <>
                   <li>
@@ -92,6 +117,45 @@ const Header = () => {
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <Link to="/exchange">Plateforme d'échange</Link>
+                    </Button>
+                  </li>
+                  <li>
+                    <Button 
+                      variant="outline"
+                      className="w-full border-white text-white hover:bg-white hover:text-primary"
+                      asChild
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Link to="/transactions">
+                        <History className="mr-2 h-4 w-4" />
+                        Historique
+                      </Link>
+                    </Button>
+                  </li>
+                  <li>
+                    <Button 
+                      variant="outline"
+                      className="w-full border-white text-white hover:bg-white hover:text-primary"
+                      asChild
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Link to="/profile">
+                        <User className="mr-2 h-4 w-4" />
+                        Profil
+                      </Link>
+                    </Button>
+                  </li>
+                  <li>
+                    <Button 
+                      variant="outline"
+                      className="w-full border-white text-white hover:bg-white hover:text-primary"
+                      asChild
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Link to="/help">
+                        <HelpCircle className="mr-2 h-4 w-4" />
+                        Aide
+                      </Link>
                     </Button>
                   </li>
                   <li>
