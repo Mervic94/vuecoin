@@ -12,6 +12,7 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import Transactions from "./pages/Transactions";
 import Help from "./pages/Help";
+import Funding from "./pages/Funding";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/help" element={<Help />} />
+            <Route path="/funding" element={<Funding />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

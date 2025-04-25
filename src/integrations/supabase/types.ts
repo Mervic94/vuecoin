@@ -9,6 +9,30 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      payment_methods: {
+        Row: {
+          code: string
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          name: string
+        }
+        Insert: {
+          code: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          name: string
+        }
+        Update: {
+          code?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          name?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -48,6 +72,8 @@ export type Database = {
           created_at: string | null
           currency: string
           id: string
+          payment_details: Json | null
+          payment_method_id: string | null
           status: string | null
           type: string
           user_id: string
@@ -57,6 +83,8 @@ export type Database = {
           created_at?: string | null
           currency: string
           id?: string
+          payment_details?: Json | null
+          payment_method_id?: string | null
           status?: string | null
           type: string
           user_id: string
@@ -66,11 +94,21 @@ export type Database = {
           created_at?: string | null
           currency?: string
           id?: string
+          payment_details?: Json | null
+          payment_method_id?: string | null
           status?: string | null
           type?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "transactions_payment_method_id_fkey"
+            columns: ["payment_method_id"]
+            isOneToOne: false
+            referencedRelation: "payment_methods"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       wallets: {
         Row: {

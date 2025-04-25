@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, LogOut, User, History, HelpCircle } from "lucide-react";
+import { Menu, LogOut, User, History, HelpCircle, CreditCard } from "lucide-react";
 import Logo from './Logo';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
@@ -41,6 +41,18 @@ const Header = () => {
                     asChild
                   >
                     <Link to="/exchange">Plateforme d'échange</Link>
+                  </Button>
+                </li>
+                <li>
+                  <Button 
+                    variant="outline"
+                    className="border-white text-white hover:bg-white hover:text-primary"
+                    asChild
+                  >
+                    <Link to="/funding">
+                      <CreditCard className="mr-2 h-4 w-4" />
+                      Dépôt/Retrait
+                    </Link>
                   </Button>
                 </li>
                 <li>
@@ -117,6 +129,19 @@ const Header = () => {
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <Link to="/exchange">Plateforme d'échange</Link>
+                    </Button>
+                  </li>
+                  <li>
+                    <Button 
+                      variant="outline"
+                      className="w-full border-white text-white hover:bg-white hover:text-primary"
+                      asChild
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Link to="/funding">
+                        <CreditCard className="mr-2 h-4 w-4" />
+                        Dépôt/Retrait
+                      </Link>
                     </Button>
                   </li>
                   <li>
