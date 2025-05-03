@@ -14,6 +14,14 @@ import Profile from "./pages/Profile";
 import Transactions from "./pages/Transactions";
 import Help from "./pages/Help";
 import Funding from "./pages/Funding";
+import WhitepaperPage from "./pages/Whitepaper";
+import Documentation from "./pages/Documentation";
+import Blog from "./pages/Blog";
+import FAQ from "./pages/FAQ";
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import LegalNotice from "./pages/LegalNotice";
+import CookiesPolicy from "./pages/CookiesPolicy";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +41,14 @@ const App = () => (
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/help" element={<Help />} />
             <Route path="/funding" element={<Funding />} />
+            <Route path="/whitepaper" element={<WhitepaperPage />} />
+            <Route path="/documentation" element={<Documentation />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/legal-notice" element={<LegalNotice />} />
+            <Route path="/cookies" element={<CookiesPolicy />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

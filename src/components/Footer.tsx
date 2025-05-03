@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
 
 const Footer = () => {
@@ -15,30 +16,30 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold mb-4">Navigation</h4>
             <ul className="space-y-2">
-              <li><a href="#about" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">À Propos</a></li>
-              <li><a href="#sectors" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Secteurs</a></li>
-              <li><a href="#features" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Caractéristiques</a></li>
-              <li><a href="#tokenomics" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Tokenomics</a></li>
+              <li><Link to="/#about" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">À Propos</Link></li>
+              <li><Link to="/#sectors" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Secteurs</Link></li>
+              <li><Link to="/#features" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Caractéristiques</Link></li>
+              <li><Link to="/#tokenomics" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Tokenomics</Link></li>
             </ul>
           </div>
           
           <div>
             <h4 className="text-lg font-bold mb-4">Ressources</h4>
             <ul className="space-y-2">
-              <li><a href="#whitepaper" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Livre Blanc</a></li>
-              <li><a href="#" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Documentation</a></li>
-              <li><a href="#" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Blog</a></li>
-              <li><a href="#" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">FAQ</a></li>
+              <li><Link to="/whitepaper" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Livre Blanc</Link></li>
+              <li><Link to="/documentation" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Documentation</Link></li>
+              <li><Link to="/blog" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Blog</Link></li>
+              <li><Link to="/faq" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">FAQ</Link></li>
             </ul>
           </div>
           
           <div>
             <h4 className="text-lg font-bold mb-4">Légal</h4>
             <ul className="space-y-2">
-              <li><a href="#" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Conditions d'utilisation</a></li>
-              <li><a href="#" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Politique de confidentialité</a></li>
-              <li><a href="#" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Mentions légales</a></li>
-              <li><a href="#" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Cookies</a></li>
+              <li><Link to="/terms-of-service" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Conditions d'utilisation</Link></li>
+              <li><Link to="/privacy-policy" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Politique de confidentialité</Link></li>
+              <li><Link to="/legal-notice" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Mentions légales</Link></li>
+              <li><Link to="/cookies" className="opacity-80 hover:opacity-100 hover:text-accent transition-colors">Cookies</Link></li>
             </ul>
           </div>
         </div>
