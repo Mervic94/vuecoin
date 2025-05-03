@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-// Type pour les transactions
+// Type modifié pour correspondre à la structure des données retournées par Supabase
 interface Transaction {
   id: string;
   created_at: string;
@@ -22,7 +22,7 @@ interface Transaction {
   currency: string;
   type: 'deposit' | 'withdrawal' | 'exchange';
   status: 'pending' | 'completed' | 'failed' | 'cancelled';
-  payment_method: {
+  payment_methods: {
     name: string;
     code: string;
   };
@@ -182,7 +182,7 @@ const Transactions = () => {
                               {transaction.amount} {transaction.currency}
                             </td>
                             <td className="py-4 px-4">
-                              {transaction.payment_method?.name || '-'}
+                              {transaction.payment_methods?.name || '-'}
                             </td>
                             <td className="py-4 px-4">
                               <Badge className={getStatusColor(transaction.status)}>
