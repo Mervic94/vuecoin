@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -23,6 +22,7 @@ const paymentIcons: Record<string, string> = {
   fedapay: fedapayLogo,
   mobile_money: mobileMoneyLogo,
   moov_money: moovMoneyLogo,
+  // Carte bancaire utilisera l'icône CreditCard de lucide-react
 };
 
 const DepositForm = () => {
@@ -88,8 +88,16 @@ const DepositForm = () => {
 
   // Fonction pour obtenir l'icône appropriée pour une méthode de paiement
   const getPaymentMethodIcon = (method: any) => {
-    if (method.code in paymentIcons) {
-      return <img src={paymentIcons[method.code]} alt={method.name} className="h-6 w-auto" />;
+    if (method.code === 'card') {
+      return <CreditCard className="h-5 w-5" />;
+    } else if (method.code in paymentIcons) {
+      return (
+        <img
+          src={paymentIcons[method.code]} 
+          alt={method.name}
+          className="h-6 w-auto"
+        />
+      );
     }
     return <CreditCard className="h-4 w-4" />;
   };

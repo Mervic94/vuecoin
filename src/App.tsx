@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import CookieConsent from "./components/CookieConsent";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Exchange from "./pages/Exchange";
@@ -23,6 +24,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <CookieConsent />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/exchange" element={<Exchange />} />
