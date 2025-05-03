@@ -10,19 +10,19 @@ import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
 
 // Importation des images pour les méthodes de paiement
-import paypalIcon from '/lovable-uploads/7b5746f2-5d4a-4146-8d9b-ac05f6077cc4.png';
-import kkiapayIcon from '/lovable-uploads/69bdf3c0-6ebf-478e-97cf-d7f20e7e5608.png';
-import fedapayIcon from '/lovable-uploads/2c2b1f50-c628-4c0c-b7fb-61385638f3be.png';
-import mobileMoneyIcon from '/lovable-uploads/d1554a92-c4d3-4ef6-9b07-2df4f67c1c6c.png';
-import moovMoneyIcon from '/lovable-uploads/c49baa4e-752c-4f97-a0ae-b2060e77df02.png';
+import paypalLogo from "../../assets/payment-icons/paypal.png";
+import kkiapayLogo from "../../assets/payment-icons/kkiapay.png";
+import fedapayLogo from "../../assets/payment-icons/fedapay.png";
+import mobileMoneyLogo from "../../assets/payment-icons/mobile-money.png";
+import moovMoneyLogo from "../../assets/payment-icons/moov-money.png";
 
 // Mapping des codes de méthode de paiement vers les icônes
 const paymentIcons: Record<string, string> = {
-  paypal: paypalIcon,
-  kkiapay: kkiapayIcon,
-  fedapay: fedapayIcon,
-  mobile_money: mobileMoneyIcon,
-  moov_money: moovMoneyIcon,
+  paypal: paypalLogo,
+  kkiapay: kkiapayLogo,
+  fedapay: fedapayLogo,
+  mobile_money: mobileMoneyLogo,
+  moov_money: moovMoneyLogo,
 };
 
 const DepositForm = () => {
