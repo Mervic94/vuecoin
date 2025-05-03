@@ -8,6 +8,8 @@ import PriceChart from '@/components/exchange/PriceChart';
 import MarketTable from '@/components/exchange/MarketTable';
 import TradeForm from '@/components/exchange/TradeForm';
 import WalletOverview from '@/components/exchange/WalletOverview';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const Exchange = () => {
   const { toast } = useToast();
@@ -22,8 +24,10 @@ const Exchange = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f1f5f9] text-[#334155]">
-      {/* Navigation */}
+    <div className="min-h-screen flex flex-col bg-[#f1f5f9] text-[#334155]">
+      <Header />
+      
+      {/* Navigation secondaire */}
       <nav className="bg-primary text-white shadow-md">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Logo className="text-white" />
@@ -39,7 +43,7 @@ const Exchange = () => {
       </nav>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 flex-1">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left Column - Chart and Market Table */}
           <div className="lg:col-span-2">
@@ -54,6 +58,8 @@ const Exchange = () => {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };

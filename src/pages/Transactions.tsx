@@ -5,6 +5,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { format } from 'date-fns';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const Transactions = () => {
   const { data: transactions, isLoading } = useQuery({
@@ -25,36 +27,40 @@ const Transactions = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <Card>
-        <CardHeader>
-          <CardTitle>Historique des transactions</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Montant</TableHead>
-                <TableHead>Devise</TableHead>
-                <TableHead>Statut</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {transactions?.map((tx) => (
-                <TableRow key={tx.id}>
-                  <TableCell>{format(new Date(tx.created_at), 'dd/MM/yyyy HH:mm')}</TableCell>
-                  <TableCell>{tx.type}</TableCell>
-                  <TableCell>{tx.amount}</TableCell>
-                  <TableCell>{tx.currency}</TableCell>
-                  <TableCell>{tx.status}</TableCell>
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <div className="container mx-auto px-4 py-8 flex-1">
+        <Card>
+          <CardHeader>
+            <CardTitle>Historique des transactions</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Date</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Montant</TableHead>
+                  <TableHead>Devise</TableHead>
+                  <TableHead>Statut</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+              </TableHeader>
+              <TableBody>
+                {transactions?.map((tx) => (
+                  <TableRow key={tx.id}>
+                    <TableCell>{format(new Date(tx.created_at), 'dd/MM/yyyy HH:mm')}</TableCell>
+                    <TableCell>{tx.type}</TableCell>
+                    <TableCell>{tx.amount}</TableCell>
+                    <TableCell>{tx.currency}</TableCell>
+                    <TableCell>{tx.status}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      </div>
+      <Footer />
     </div>
   );
 };

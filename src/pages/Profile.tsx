@@ -4,6 +4,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import KYCSection from '@/components/profile/KYCSection';
 import ProfileForm from '@/components/profile/ProfileForm';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 const Profile = () => {
   const { user } = useAuth();
@@ -13,11 +15,15 @@ const Profile = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="grid gap-6">
-        <ProfileForm />
-        <KYCSection />
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <div className="container mx-auto px-4 py-8 flex-1">
+        <div className="grid gap-6">
+          <ProfileForm />
+          <KYCSection />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

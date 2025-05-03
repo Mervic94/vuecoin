@@ -7,6 +7,23 @@ import { Input } from '@/components/ui/input';
 import { CreditCard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import { cn } from '@/lib/utils';
+
+// Importation des images pour les méthodes de paiement
+import paypalIcon from '/lovable-uploads/7b5746f2-5d4a-4146-8d9b-ac05f6077cc4.png';
+import kkiapayIcon from '/lovable-uploads/69bdf3c0-6ebf-478e-97cf-d7f20e7e5608.png';
+import fedapayIcon from '/lovable-uploads/2c2b1f50-c628-4c0c-b7fb-61385638f3be.png';
+import mobileMoneyIcon from '/lovable-uploads/d1554a92-c4d3-4ef6-9b07-2df4f67c1c6c.png';
+import moovMoneyIcon from '/lovable-uploads/c49baa4e-752c-4f97-a0ae-b2060e77df02.png';
+
+// Mapping des codes de méthode de paiement vers les icônes
+const paymentIcons: Record<string, string> = {
+  paypal: paypalIcon,
+  kkiapay: kkiapayIcon,
+  fedapay: fedapayIcon,
+  mobile_money: mobileMoneyIcon,
+  moov_money: moovMoneyIcon,
+};
 
 const DepositForm = () => {
   const [amount, setAmount] = useState('');
@@ -69,6 +86,14 @@ const DepositForm = () => {
     }
   };
 
+  // Fonction pour obtenir l'icône appropriée pour une méthode de paiement
+  const getPaymentMethodIcon = (method: any) => {
+    if (method.code in paymentIcons) {
+      return <img src={paymentIcons[method.code]} alt={method.name} className="h-6 w-auto" />;
+    }
+    return <CreditCard className="h-4 w-4" />;
+  };
+
   return (
     <form onSubmit={handleDeposit} className="space-y-4">
       <div className="space-y-2">
@@ -86,17 +111,22 @@ const DepositForm = () => {
 
       <div className="space-y-2">
         <label className="text-sm font-medium">Méthode de paiement</label>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
           {paymentMethods?.map((method) => (
             <Button
               key={method.id}
               type="button"
               variant={selectedMethod === method.id ? "default" : "outline"}
               onClick={() => setSelectedMethod(method.id)}
-              className="flex items-center gap-2"
+              className={cn(
+                "flex items-center gap-2 h-auto py-3",
+                selectedMethod === method.id ? "border-2 border-primary" : ""
+              )}
             >
-              <CreditCard className="h-4 w-4" />
-              {method.name}
+              <span className="flex items-center justify-center w-6 h-6">
+                {getPaymentMethodIcon(method)}
+              </span>
+              <span>{method.name}</span>
             </Button>
           ))}
         </div>
