@@ -4,6 +4,12 @@ import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Badge } from '@/components/ui/badge';
 import { Transaction } from '@/types/transaction';
+import { 
+  CreditCard, 
+  RefreshCw,
+  ArrowDownCircle, 
+  ArrowUpCircle 
+} from 'lucide-react';
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -23,13 +29,13 @@ const getStatusColor = (status: string) => {
 const getTypeIcon = (type: string) => {
   switch (type) {
     case 'deposit':
-      return '↓';
+      return <ArrowDownCircle className="h-4 w-4 text-green-600" />;
     case 'withdrawal':
-      return '↑';
+      return <ArrowUpCircle className="h-4 w-4 text-red-600" />;
     case 'exchange':
-      return '↔';
+      return <RefreshCw className="h-4 w-4 text-blue-600" />;
     default:
-      return '•';
+      return <CreditCard className="h-4 w-4" />;
   }
 };
 
@@ -53,7 +59,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, isLoa
         </thead>
         <tbody>
           {transactions.map((transaction) => (
-            <tr key={transaction.id} className="border-b hover:bg-muted/50">
+            <tr key={transaction.id} className="border-b hover:bg-muted/50 transition-colors duration-200">
               <td className="py-4 px-4">
                 <div>
                   {new Date(transaction.created_at).toLocaleDateString()}
@@ -63,8 +69,8 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, isLoa
                 </div>
               </td>
               <td className="py-4 px-4">
-                <div className="flex items-center gap-1">
-                  <span className="text-lg">{getTypeIcon(transaction.type)}</span>
+                <div className="flex items-center gap-2">
+                  {getTypeIcon(transaction.type)}
                   <span className="capitalize">
                     {transaction.type === 'deposit' ? 'Dépôt' : 
                      transaction.type === 'withdrawal' ? 'Retrait' : 'Échange'}
@@ -75,10 +81,25 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, isLoa
                 {transaction.amount} {transaction.currency}
               </td>
               <td className="py-4 px-4">
-                {transaction.payment_methods?.name || '-'}
+                <div className="flex items-center gap-2">
+                  <span className="inline-block w-6 h-6">
+                    {transaction.payment_methods?.code === 'card' ? 
+                      <CreditCard className="h-5 w-5 text-primary" /> : 
+                      <img 
+                        src={`/src/assets/payment-icons/${transaction.payment_methods?.code}.png`} 
+                        alt={transaction.payment_methods?.name || 'Méthode de paiement'} 
+                        className="h-5 w-5 object-contain"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = '/src/assets/payment-icons/card.png';
+                        }}
+                      />
+                    }
+                  </span>
+                  {transaction.payment_methods?.name || '-'}
+                </div>
               </td>
               <td className="py-4 px-4">
-                <Badge className={getStatusColor(transaction.status)}>
+                <Badge className={`${getStatusColor(transaction.status)} transition-colors duration-200 hover:bg-accent hover:text-accent-foreground`}>
                   {transaction.status === 'completed' ? 'Terminé' : 
                    transaction.status === 'pending' ? 'En attente' :
                    transaction.status === 'failed' ? 'Échoué' : 'Annulé'}

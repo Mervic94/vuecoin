@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -14,6 +15,12 @@ import kkiapayLogo from "../../assets/payment-icons/kkiapay.png";
 import fedapayLogo from "../../assets/payment-icons/fedapay.png";
 import mobileMoneyLogo from "../../assets/payment-icons/mobile-money.png";
 import moovMoneyLogo from "../../assets/payment-icons/moov-money.png";
+import mpesaLogo from "../../assets/payment-icons/mpesa.png";
+import orangeMoneyLogo from "../../assets/payment-icons/orange-money.png"; 
+import bankTransferLogo from "../../assets/payment-icons/bank-transfer.png";
+import westernUnionLogo from "../../assets/payment-icons/western-union.png";
+import moneygramLogo from "../../assets/payment-icons/moneygram.png";
+import waveMoneyLogo from "../../assets/payment-icons/wave.png";
 
 // Mapping des codes de méthode de paiement vers les icônes
 const paymentIcons: Record<string, string> = {
@@ -22,6 +29,12 @@ const paymentIcons: Record<string, string> = {
   fedapay: fedapayLogo,
   mobile_money: mobileMoneyLogo,
   moov_money: moovMoneyLogo,
+  mpesa: mpesaLogo,
+  orange_money: orangeMoneyLogo,
+  bank_transfer: bankTransferLogo,
+  western_union: westernUnionLogo,
+  moneygram: moneygramLogo,
+  wave: waveMoneyLogo,
   // Carte bancaire utilisera l'icône CreditCard de lucide-react
 };
 
@@ -114,6 +127,7 @@ const WithdrawForm = () => {
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Montant à retirer"
           required
+          className="transition-colors duration-200 focus:border-[#f1c40f] focus:ring-[#f1c40f]"
         />
       </div>
 
@@ -127,8 +141,10 @@ const WithdrawForm = () => {
               variant={selectedMethod === method.id ? "default" : "outline"}
               onClick={() => setSelectedMethod(method.id)}
               className={cn(
-                "flex items-center gap-2 h-auto py-3",
-                selectedMethod === method.id ? "border-2 border-primary" : ""
+                "flex items-center gap-2 h-auto py-3 transition-colors duration-200",
+                selectedMethod === method.id 
+                  ? "border-2 border-primary" 
+                  : "hover:bg-[#f1c40f]/10 hover:text-foreground hover:border-[#f1c40f]/50"
               )}
             >
               <span className="flex items-center justify-center w-6 h-6">
@@ -140,7 +156,11 @@ const WithdrawForm = () => {
         </div>
       </div>
 
-      <Button type="submit" className="w-full" disabled={!amount || !selectedMethod}>
+      <Button 
+        type="submit" 
+        className="w-full transition-colors duration-200 hover:bg-[#f1c40f]" 
+        disabled={!amount || !selectedMethod}
+      >
         Retirer
       </Button>
     </form>

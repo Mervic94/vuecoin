@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -8,12 +8,16 @@ import Footer from '@/components/Footer';
 import TransactionFilter from '@/components/transactions/TransactionFilter';
 import TransactionTabs from '@/components/transactions/TransactionTabs';
 import { Transaction } from '@/types/transaction';
+import { Button } from '@/components/ui/button';
+import { RefreshCw } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const Transactions = () => {
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
+  const { toast } = useToast();
   
-  const { data: transactions, isLoading } = useQuery({
+  const { data: transactions, isLoading, refetch } = useQuery({
     queryKey: ['transactions', user?.id],
     queryFn: async () => {
       if (!user) return [];
@@ -35,7 +39,14 @@ const Transactions = () => {
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
       
-      if (error) throw error;
+      if (error) {
+        toast({
+          title: "Erreur lors du chargement des transactions",
+          description: error.message,
+          variant: "destructive"
+        });
+        throw error;
+      }
       
       return data as Transaction[];
     },
@@ -56,15 +67,32 @@ const Transactions = () => {
     setSearchQuery(query);
   };
 
+  const handleRefresh = () => {
+    refetch();
+    toast({
+      title: "Actualisation en cours",
+      description: "La liste des transactions est en cours d'actualisation."
+    });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="container mx-auto px-4 py-8 flex-1">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-primary mb-2">Historique des Transactions</h1>
-          <p className="text-muted-foreground">
-            Consultez l'historique détaillé de toutes vos transactions sur la plateforme VueCoin.
-          </p>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+          <div>
+            <h1 className="text-3xl font-bold text-primary mb-2">Historique des Transactions</h1>
+            <p className="text-muted-foreground">
+              Consultez l'historique détaillé de toutes vos transactions sur la plateforme VueCoin.
+            </p>
+          </div>
+          <Button 
+            onClick={handleRefresh} 
+            variant="outline" 
+            className="mt-4 md:mt-0 transition-colors duration-200 hover:bg-accent hover:text-accent-foreground"
+          >
+            <RefreshCw className="h-4 w-4 mr-2" /> Actualiser
+          </Button>
         </div>
         
         <TransactionFilter onSearch={handleSearch} />
