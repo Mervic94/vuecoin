@@ -10,7 +10,7 @@ interface TeamMemberProps {
 const TeamMember = ({ name, role, imageUrl }: TeamMemberProps) => {
   return (
     <div className="flex flex-col items-center">
-      <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-white shadow-md">
+      <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-4 border-vuecoin-accent shadow-md">
         <img 
           src={imageUrl}
           alt={name}
