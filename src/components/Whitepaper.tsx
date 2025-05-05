@@ -5,6 +5,15 @@ import { Button } from "@/components/ui/button";
 import { Download, ExternalLink } from "lucide-react";
 
 const Whitepaper = () => {
+  const handleDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/assets/VueCoin-Whitepaper.pdf';
+    link.download = 'VueCoin-Whitepaper.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <section id="whitepaper" className="py-16 md:py-24">
       <div className="container mx-auto px-4">
@@ -32,7 +41,11 @@ const Whitepaper = () => {
             </p>
             
             <div className="flex flex-col w-full gap-4">
-              <Button className="w-full bg-accent text-primary hover:bg-accent/80" size="lg">
+              <Button 
+                className="w-full bg-accent text-primary hover:bg-accent/80" 
+                size="lg"
+                onClick={handleDownload}
+              >
                 <Download className="mr-2 h-4 w-4" /> Télécharger le PDF
               </Button>
               

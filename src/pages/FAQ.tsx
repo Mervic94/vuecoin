@@ -19,19 +19,19 @@ const FAQ = () => {
   const generalFaqs = [
     {
       question: "Qu'est-ce que VueCoin et en quoi est-ce différent des autres cryptomonnaies ?",
-      answer: "VueCoin est une cryptomonnaie unique dont la valeur est soutenue par des investissements réels dans quatre secteurs stratégiques : l'immobilier, les énergies renouvelables, l'agriculture durable et les technologies de santé. Contrairement à la plupart des cryptomonnaies qui n'ont pas d'ancrage tangible, VueCoin combine les avantages de la blockchain avec des investissements dans l'économie réelle, offrant ainsi une proposition de valeur plus stable et plus robuste."
+      answer: "VueCoin est une cryptomonnaie unique dont la valeur est soutenue par des investissements réels dans quatre secteurs stratégiques : l'immobilier, les énergies renouvelables, l'agriculture durable et les technologies de santé. Contrairement à la plupart des cryptomonnaies qui manquent d'ancrage tangible, VueCoin combine les avantages de la blockchain (sécurité, transparence, décentralisation) avec une stratégie d'investissement dans des actifs tangibles, créant ainsi une proposition de valeur plus stable et plus robuste."
     },
     {
       question: "Comment fonctionne la stabilité de valeur de VueCoin ?",
-      answer: "La stabilité de VueCoin vient de son ancrage dans l'économie réelle à travers nos investissements dans quatre secteurs stratégiques. Ces investissements génèrent des revenus réguliers (comme les loyers immobiliers ou la vente d'énergie renouvelable) qui alimentent notre trésorerie et soutiennent la valeur du token. De plus, notre mécanisme de gouvernance et notre politique de rachat contribuent à maintenir un équilibre entre l'offre et la demande."
+      answer: "La stabilité de VueCoin provient de son ancrage dans l'économie réelle via nos investissements dans quatre secteurs stratégiques. Ces investissements génèrent des revenus réguliers (comme les loyers immobiliers, la vente d'énergie renouvelable, les rendements agricoles) qui soutiennent la valeur du token. Notre approche innovante vise à réduire la volatilité excessive typique des cryptomonnaies en créant un lien direct avec des actifs tangibles ayant une valeur intrinsèque."
     },
     {
-      question: "Où puis-je acheter des VueCoins ?",
-      answer: "Vous pouvez acheter des VueCoins directement sur notre plateforme d'échange officielle après avoir créé un compte et complété le processus de vérification KYC. VueCoin est également disponible sur plusieurs bourses d'échange tierces. Pour obtenir la liste complète des plateformes supportées, veuillez consulter la section 'Échanges' de notre site web."
+      question: "Quand a été lancé VueCoin et quelle est sa vision ?",
+      answer: "VueCoin a été lancée en 2025 avec la vision de devenir la première cryptomonnaie mondiale dont la valeur est soutenue par des investissements stratégiques dans l'économie réelle. Notre mission est de créer un écosystème financier décentralisé qui offre stabilité, croissance et utilité, en combinant l'innovation blockchain avec des investissements tangibles dans des secteurs d'avenir."
     },
     {
       question: "Quelles sont les perspectives d'avenir pour VueCoin ?",
-      answer: "Notre vision à long terme est de développer un écosystème complet autour de VueCoin, avec des applications décentralisées permettant d'interagir directement avec nos investissements dans l'économie réelle. Nous prévoyons également d'étendre notre présence géographique et d'élargir notre portefeuille d'investissements dans nos quatre secteurs stratégiques. Notre feuille de route détaillée est disponible dans notre livre blanc."
+      answer: "Notre vision à long terme est de développer un écosystème complet autour de VueCoin, avec des applications décentralisées permettant d'interagir directement avec nos investissements dans l'économie réelle. Notre feuille de route prévoit une expansion des investissements dans nos quatre secteurs stratégiques, le développement de nouveaux partenariats, et un renforcement de notre gouvernance décentralisée pour impliquer davantage la communauté dans les décisions d'investissement."
     },
   ];
 
@@ -41,31 +41,31 @@ const FAQ = () => {
       answer: "Pour investir dans VueCoin, vous devez d'abord créer un compte sur notre plateforme, compléter le processus de vérification KYC, puis déposer des fonds via l'une de nos méthodes de paiement acceptées. Une fois ces étapes terminées, vous pourrez acheter des VueCoins directement depuis votre tableau de bord."
     },
     {
-      question: "Y a-t-il un investissement minimum requis ?",
-      answer: "Il n'y a pas d'investissement minimum requis pour acheter des VueCoins. Vous pouvez commencer avec le montant qui vous convient, ce qui rend VueCoin accessible à un large éventail d'investisseurs. Cependant, certaines fonctionnalités comme le staking peuvent avoir des seuils minimums spécifiques."
+      question: "Dans quels secteurs VueCoin investit-il précisément ?",
+      answer: "VueCoin investit dans quatre secteurs économiques clés qui forment le socle de sa valeur : 1) L'immobilier : actifs sélectionnés pour leur potentiel de rendement locatif et de plus-value. 2) Les énergies renouvelables : projets d'énergie solaire, éolienne et autres technologies durables. 3) L'agriculture durable : investissements dans la production alimentaire moderne et responsable. 4) Les technologies de santé : entreprises développant des technologies médicales d'avenir avec un potentiel de croissance important."
     },
     {
-      question: "Quels sont les frais associés à l'achat et à la vente de VueCoin ?",
-      answer: "Les frais de transaction sur notre plateforme sont de 0,5% pour les achats et de 0,5% pour les ventes. Les dépôts sont généralement gratuits, tandis que les frais de retrait varient en fonction de la méthode de paiement choisie. Pour les détails complets, veuillez consulter notre page de frais."
+      question: "Comment ces investissements soutiennent-ils la valeur de VueCoin ?",
+      answer: "Les investissements dans nos quatre secteurs stratégiques génèrent des revenus réguliers (loyers, vente d'énergie, production agricole, licences technologiques) qui alimentent notre trésorerie. Une partie de ces revenus est utilisée pour soutenir le cours de VueCoin via des mécanismes de rachat sur le marché, tandis qu'une autre partie est réinvestie pour faire croître notre portefeuille d'actifs, renforçant ainsi la valeur sous-jacente à long terme."
     },
     {
       question: "Comment puis-je suivre la performance de mes investissements en VueCoin ?",
-      answer: "Votre tableau de bord personnel sur la plateforme VueCoin vous permet de suivre en temps réel la valeur de vos investissements, l'historique de vos transactions et vos rendements de staking. Nous fournissons également des rapports trimestriels détaillant la performance des investissements sous-jacents dans les quatre secteurs stratégiques."
+      answer: "Votre tableau de bord personnel sur la plateforme VueCoin vous permet de suivre en temps réel la valeur de vos investissements, l'historique de vos transactions et vos rendements de staking. Nous fournissons également des rapports trimestriels détaillant la performance des investissements sous-jacents dans les quatre secteurs stratégiques, offrant ainsi une transparence totale sur la gestion des fonds."
     },
   ];
 
   const technicalFaqs = [
     {
       question: "Sur quelle blockchain VueCoin est-il basé ?",
-      answer: "VueCoin est basé sur la blockchain Ethereum et utilise le standard ERC-20, ce qui assure une large compatibilité avec les portefeuilles et les échanges existants. Nous explorons également des solutions de couche 2 pour améliorer l'évolutivité et réduire les frais de transaction."
+      answer: "VueCoin est basé sur la blockchain Ethereum et utilise le standard ERC-20, ce qui assure une large compatibilité avec les portefeuilles et les échanges existants. Notre architecture technique combine la sécurité et la décentralisation d'Ethereum avec des solutions de couche 2 pour améliorer l'évolutivité et réduire les frais de transaction."
     },
     {
       question: "Comment fonctionne le staking de VueCoin ?",
-      answer: "Le staking de VueCoin vous permet de verrouiller vos tokens pendant une période déterminée en échange de récompenses. Ces récompenses proviennent des revenus générés par nos investissements dans l'économie réelle. Plus vous bloquez vos tokens longtemps, plus le taux de rendement est élevé. Le staking vous donne également des droits de vote dans notre système de gouvernance."
+      answer: "Le staking de VueCoin vous permet de verrouiller vos tokens pendant une période déterminée en échange de récompenses provenant des revenus générés par nos investissements dans l'économie réelle. Plus vous bloquez vos tokens longtemps, plus le taux de rendement est élevé. Le staking vous donne également des droits de vote dans notre système de gouvernance décentralisée."
     },
     {
-      question: "VueCoin utilise-t-il le Proof of Stake ou le Proof of Work ?",
-      answer: "VueCoin utilise un mécanisme de consensus Proof of Stake (PoS), qui est beaucoup plus économe en énergie que le Proof of Work. Notre implémentation spécifique du PoS est conçue pour favoriser la participation à long terme et la gouvernance décentralisée de l'écosystème."
+      question: "Comment VueCoin assure-t-il la gouvernance et la décentralisation ?",
+      answer: "VueCoin utilise un système de gouvernance décentralisée où les détenteurs de tokens peuvent voter sur les décisions importantes concernant les investissements et la direction stratégique du projet. Le poids du vote est déterminé par la quantité de tokens possédés et la durée de staking. Ce mécanisme assure que le pouvoir de décision reste distribué parmi la communauté tout en privilégiant les investisseurs à long terme."
     },
     {
       question: "Comment puis-je sécuriser mes VueCoins ?",
@@ -87,8 +87,8 @@ const FAQ = () => {
       answer: "VueCoin respecte rigoureusement le RGPD et d'autres réglementations sur la protection des données. Nous utilisons des technologies de pointe pour crypter et sécuriser vos informations personnelles. Notre politique de confidentialité détaillée explique comment nous collectons, utilisons et protégeons vos données."
     },
     {
-      question: "Quels sont mes recours en cas de litige ?",
-      answer: "En cas de litige, notre équipe de support client est disponible pour vous aider à résoudre le problème. Si nécessaire, nous disposons également d'une procédure formelle de résolution des litiges. Les détails complets sont disponibles dans nos conditions d'utilisation. Pour les utilisateurs européens, des mécanismes de résolution des litiges supplémentaires peuvent être disponibles conformément aux réglementations de l'UE."
+      question: "Comment les actifs réels sont-ils juridiquement liés à VueCoin ?",
+      answer: "Les investissements dans l'économie réelle sont détenus par une entité juridique spécifique dont la propriété est tokenisée via VueCoin. Cette structure juridique innovante assure que les détenteurs de VueCoin bénéficient indirectement de la propriété des actifs sous-jacents, tout en respectant les cadres réglementaires locaux dans chaque juridiction où les investissements sont réalisés."
     },
   ];
 

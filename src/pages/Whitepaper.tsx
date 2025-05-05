@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Download, ExternalLink, FileText } from "lucide-react";
@@ -6,6 +5,20 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const WhitepaperPage = () => {
+  const handleDownload = () => {
+    // Créer un lien pour télécharger le PDF
+    const link = document.createElement('a');
+    link.href = '/assets/VueCoin-Whitepaper.pdf';
+    link.download = 'VueCoin-Whitepaper.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handlePrintVersion = () => {
+    window.open('/assets/VueCoin-Whitepaper.pdf', '_blank');
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -24,7 +37,11 @@ const WhitepaperPage = () => {
               </div>
               
               <div className="space-y-4 w-full">
-                <Button className="w-full bg-accent text-primary hover:bg-accent/80" size="lg">
+                <Button 
+                  className="w-full bg-accent text-primary hover:bg-accent/80" 
+                  size="lg"
+                  onClick={handleDownload}
+                >
                   <Download className="mr-2 h-4 w-4" /> Télécharger le PDF
                 </Button>
                 
@@ -32,6 +49,7 @@ const WhitepaperPage = () => {
                   className="w-full"
                   variant="outline"
                   size="lg"
+                  onClick={handlePrintVersion}
                 >
                   <FileText className="mr-2 h-4 w-4" />
                   Version imprimable
@@ -144,7 +162,11 @@ const WhitepaperPage = () => {
           </div>
           
           <div className="flex justify-center">
-            <Button className="bg-accent text-primary hover:bg-accent/80 px-8" size="lg">
+            <Button 
+              className="bg-accent text-primary hover:bg-accent/80 px-8" 
+              size="lg"
+              onClick={handleDownload}
+            >
               <Download className="mr-2 h-4 w-4" /> Télécharger le Livre Blanc
             </Button>
           </div>
