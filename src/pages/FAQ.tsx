@@ -1,23 +1,15 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import FAQSearch from '@/components/faq/FAQSearch';
 import FAQTabs from '@/components/faq/FAQTabs';
 import FAQContact from '@/components/faq/FAQContact';
 import FAQSearchResults from '@/components/faq/FAQSearchResults';
-import { getAllFaqs } from '@/components/faq/FAQData';
+import { useFAQSearch } from '@/hooks/useFAQSearch';
 
 const FAQ = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const allFaqs = getAllFaqs();
-  
-  const filteredFaqs = searchQuery 
-    ? allFaqs.filter(faq => 
-        faq.question.toLowerCase().includes(searchQuery.toLowerCase()) || 
-        faq.answer.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-    : [];
+  const { searchQuery, setSearchQuery, filteredFaqs, isSearching } = useFAQSearch();
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -33,7 +25,7 @@ const FAQ = () => {
             <FAQSearch searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
           </div>
           
-          {searchQuery ? (
+          {isSearching ? (
             <FAQSearchResults searchQuery={searchQuery} filteredFaqs={filteredFaqs} />
           ) : (
             <FAQTabs />

@@ -9,7 +9,7 @@ interface FAQSearchResultsProps {
 
 const FAQSearchResults = ({ searchQuery, filteredFaqs }: FAQSearchResultsProps) => {
   return (
-    <div className="mb-12">
+    <div className="mb-12 animate-fade-in">
       <h2 className="text-2xl font-semibold mb-6">Résultats de recherche pour "{searchQuery}"</h2>
       {filteredFaqs.length > 0 ? (
         <FAQAccordion faqs={filteredFaqs} category="search" />

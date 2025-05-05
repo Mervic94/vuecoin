@@ -11,11 +11,11 @@ const FAQContact = () => {
         Notre équipe est là pour vous aider avec toutes vos questions. N'hésitez pas à nous contacter.
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2 transition-colors hover:bg-accent hover:text-primary">
           <Mail className="h-4 w-4" />
           Nous contacter
         </Button>
-        <Button variant="outline" className="flex items-center gap-2">
+        <Button variant="outline" className="flex items-center gap-2 transition-colors hover:bg-accent hover:text-primary">
           <ArrowRight className="h-4 w-4" />
           Centre d'aide
         </Button>

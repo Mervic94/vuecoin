@@ -8,27 +8,47 @@ const FAQTabs = () => {
   return (
     <Tabs defaultValue="general" className="mb-12">
       <div className="flex justify-center mb-6">
-        <TabsList>
-          <TabsTrigger value="general">Général</TabsTrigger>
-          <TabsTrigger value="investing">Investissement</TabsTrigger>
-          <TabsTrigger value="technical">Technique</TabsTrigger>
-          <TabsTrigger value="legal">Juridique</TabsTrigger>
+        <TabsList className="bg-muted/50">
+          <TabsTrigger 
+            value="general" 
+            className="data-[state=active]:bg-accent data-[state=active]:text-primary transition-colors hover:bg-accent/50"
+          >
+            Général
+          </TabsTrigger>
+          <TabsTrigger 
+            value="investing"
+            className="data-[state=active]:bg-accent data-[state=active]:text-primary transition-colors hover:bg-accent/50"
+          >
+            Investissement
+          </TabsTrigger>
+          <TabsTrigger 
+            value="technical"
+            className="data-[state=active]:bg-accent data-[state=active]:text-primary transition-colors hover:bg-accent/50"
+          >
+            Technique
+          </TabsTrigger>
+          <TabsTrigger 
+            value="legal"
+            className="data-[state=active]:bg-accent data-[state=active]:text-primary transition-colors hover:bg-accent/50"
+          >
+            Juridique
+          </TabsTrigger>
         </TabsList>
       </div>
       
-      <TabsContent value="general">
+      <TabsContent value="general" className="animate-fade-in">
         <FAQAccordion faqs={generalFaqs} category="general" />
       </TabsContent>
       
-      <TabsContent value="investing">
+      <TabsContent value="investing" className="animate-fade-in">
         <FAQAccordion faqs={investingFaqs} category="investing" />
       </TabsContent>
       
-      <TabsContent value="technical">
+      <TabsContent value="technical" className="animate-fade-in">
         <FAQAccordion faqs={technicalFaqs} category="technical" />
       </TabsContent>
       
-      <TabsContent value="legal">
+      <TabsContent value="legal" className="animate-fade-in">
         <FAQAccordion faqs={legalFaqs} category="legal" />
       </TabsContent>
     </Tabs>

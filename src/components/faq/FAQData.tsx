@@ -1,10 +1,9 @@
-
 import { FAQItem } from './FAQAccordion';
 
 export const generalFaqs: FAQItem[] = [
   {
     question: "Qu'est-ce que VueCoin et en quoi est-ce différent des autres cryptomonnaies ?",
-    answer: "VueCoin est une cryptomonnaie unique dont la valeur est soutenue par des investissements réels dans quatre secteurs stratégiques : l'immobilier, les énergies renouvelables, l'agriculture durable et les technologies de santé. Contrairement à la plupart des cryptomonnaies qui manquent d'ancrage tangible, VueCoin combine les avantages de la blockchain (sécurité, transparence, décentralisation) avec une stratégie d'investissement dans des actifs tangibles, créant ainsi une proposition de valeur plus stable et plus robuste."
+    answer: "VueCoins est une cryptomonnaie unique dont la valeur est soutenue par des investissements réels dans quatre secteurs stratégiques : l'immobilier, les énergies renouvelables, l'agriculture durable et les technologies de santé. Contrairement à la plupart des cryptomonnaies qui manquent d'ancrage tangible, VueCoins combine les avantages de la blockchain (sécurité, transparence, décentralisation) avec une stratégie d'investissement dans des actifs tangibles, créant ainsi une proposition de valeur plus stable et plus robuste."
   },
   {
     question: "Comment fonctionne la stabilité de valeur de VueCoin ?",

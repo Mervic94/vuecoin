@@ -2,7 +2,6 @@
 import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Search } from 'lucide-react';
-import { FAQItem } from './FAQAccordion';
 
 interface FAQSearchProps {
   searchQuery: string;
@@ -15,7 +14,7 @@ const FAQSearch = ({ searchQuery, setSearchQuery }: FAQSearchProps) => {
       <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
       <Input 
         placeholder="Rechercher une question..." 
-        className="pl-10 h-12 text-lg"
+        className="pl-10 h-12 text-lg border-2 focus:border-accent focus:ring-accent transition-colors duration-300"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
