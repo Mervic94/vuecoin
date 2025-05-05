@@ -4,39 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { CreditCard } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { cn } from '@/lib/utils';
-
-// Importation des images pour les méthodes de paiement
-import paypalLogo from "../../assets/payment-icons/paypal.png";
-import kkiapayLogo from "../../assets/payment-icons/kkiapay.png";
-import fedapayLogo from "../../assets/payment-icons/fedapay.png";
-import mobileMoneyLogo from "../../assets/payment-icons/mobile-money.png";
-import moovMoneyLogo from "../../assets/payment-icons/moov-money.png";
-import mpesaLogo from "../../assets/payment-icons/mpesa.png";
-import orangeMoneyLogo from "../../assets/payment-icons/orange-money.png"; 
-import bankTransferLogo from "../../assets/payment-icons/bank-transfer.png";
-import westernUnionLogo from "../../assets/payment-icons/western-union.png";
-import moneygramLogo from "../../assets/payment-icons/moneygram.png";
-import waveMoneyLogo from "../../assets/payment-icons/wave.png";
-
-// Mapping des codes de méthode de paiement vers les icônes
-const paymentIcons: Record<string, string> = {
-  paypal: paypalLogo,
-  kkiapay: kkiapayLogo,
-  fedapay: fedapayLogo,
-  mobile_money: mobileMoneyLogo,
-  moov_money: moovMoneyLogo,
-  mpesa: mpesaLogo,
-  orange_money: orangeMoneyLogo,
-  bank_transfer: bankTransferLogo,
-  western_union: westernUnionLogo,
-  moneygram: moneygramLogo,
-  wave: waveMoneyLogo,
-  // Carte bancaire utilisera l'icône CreditCard de lucide-react
-};
+import { getPaymentMethodIcon } from '@/utils/paymentIcons';
 
 const WithdrawForm = () => {
   const [amount, setAmount] = useState('');
@@ -97,22 +68,6 @@ const WithdrawForm = () => {
         variant: "destructive"
       });
     }
-  };
-
-  // Fonction pour obtenir l'icône appropriée pour une méthode de paiement
-  const getPaymentMethodIcon = (method: any) => {
-    if (method.code === 'card') {
-      return <CreditCard className="h-5 w-5" />;
-    } else if (method.code in paymentIcons) {
-      return (
-        <img
-          src={paymentIcons[method.code]} 
-          alt={method.name}
-          className="h-6 w-auto"
-        />
-      );
-    }
-    return <CreditCard className="h-4 w-4" />;
   };
 
   return (

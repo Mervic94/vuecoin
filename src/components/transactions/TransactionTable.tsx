@@ -10,6 +10,7 @@ import {
   ArrowDownCircle, 
   ArrowUpCircle 
 } from 'lucide-react';
+import { paymentIcons } from '@/utils/paymentIcons';
 
 const getStatusColor = (status: string) => {
   switch (status) {
@@ -83,17 +84,22 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, isLoa
               <td className="py-4 px-4">
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-6 h-6">
-                    {transaction.payment_methods?.code === 'card' ? 
-                      <CreditCard className="h-5 w-5 text-primary" /> : 
+                    {transaction.payment_methods?.code && 
+                     transaction.payment_methods.code in paymentIcons && 
+                     typeof paymentIcons[transaction.payment_methods.code] === 'string' ? (
                       <img 
-                        src={`/src/assets/payment-icons/${transaction.payment_methods?.code}.png`} 
-                        alt={transaction.payment_methods?.name || 'Méthode de paiement'} 
+                        src={paymentIcons[transaction.payment_methods.code] as string} 
+                        alt={transaction.payment_methods.name || 'Méthode de paiement'} 
                         className="h-5 w-5 object-contain"
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = '/src/assets/payment-icons/card.png';
+                          const target = e.target as HTMLImageElement;
+                          target.style.display = 'none';
+                          // Since we can't render React components here, we'll just hide the broken image
                         }}
                       />
-                    }
+                    ) : (
+                      <CreditCard className="h-5 w-5 text-primary" />
+                    )}
                   </span>
                   {transaction.payment_methods?.name || '-'}
                 </div>
