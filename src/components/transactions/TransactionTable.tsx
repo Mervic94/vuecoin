@@ -85,18 +85,20 @@ const TransactionTable: React.FC<TransactionTableProps> = ({ transactions, isLoa
                 <div className="flex items-center gap-2">
                   <span className="inline-block w-6 h-6">
                     {transaction.payment_methods?.code && 
-                     transaction.payment_methods.code in paymentIcons && 
-                     typeof paymentIcons[transaction.payment_methods.code] === 'string' ? (
-                      <img 
-                        src={paymentIcons[transaction.payment_methods.code] as string} 
-                        alt={transaction.payment_methods.name || 'Méthode de paiement'} 
-                        className="h-5 w-5 object-contain"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                          // Since we can't render React components here, we'll just hide the broken image
-                        }}
-                      />
+                     transaction.payment_methods.code in paymentIcons ? 
+                      (typeof paymentIcons[transaction.payment_methods.code] === 'string' ? (
+                        <img 
+                          src={paymentIcons[transaction.payment_methods.code] as string} 
+                          alt={transaction.payment_methods.name || 'Méthode de paiement'} 
+                          className="h-5 w-5 object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.style.display = 'none';
+                          }}
+                        />
+                      ) : (
+                        <CreditCard className="h-5 w-5 text-primary" />
+                      )
                     ) : (
                       <CreditCard className="h-5 w-5 text-primary" />
                     )}
