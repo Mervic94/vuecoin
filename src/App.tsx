@@ -22,6 +22,7 @@ import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import LegalNotice from "./pages/LegalNotice";
 import CookiesPolicy from "./pages/CookiesPolicy";
+import VueConsensus from "./pages/VueConsensus";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/legal-notice" element={<LegalNotice />} />
             <Route path="/cookies" element={<CookiesPolicy />} />
+            <Route path="/vueconsensus" element={<VueConsensus />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
