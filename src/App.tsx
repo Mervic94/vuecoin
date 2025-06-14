@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,6 +22,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import LegalNotice from "./pages/LegalNotice";
 import CookiesPolicy from "./pages/CookiesPolicy";
 import VueConsensus from "./pages/VueConsensus";
+import KycDashboard from "@/pages/admin/KycDashboard";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +51,7 @@ const App = () => (
             <Route path="/legal-notice" element={<LegalNotice />} />
             <Route path="/cookies" element={<CookiesPolicy />} />
             <Route path="/vueconsensus" element={<VueConsensus />} />
+            <Route path="/admin/kyc" element={<KycDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
