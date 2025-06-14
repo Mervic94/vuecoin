@@ -19,6 +19,28 @@ interface KycLog {
   reason?: string;
 }
 
+const isKycDocArray = (value: unknown): value is KycDoc[] =>
+  Array.isArray(value) &&
+  value.every(
+    (v) =>
+      v &&
+      typeof v === "object" &&
+      typeof (v as any).name === "string" &&
+      typeof (v as any).path === "string" &&
+      typeof (v as any).uploaded_at === "string"
+  );
+
+const isKycLogArray = (value: unknown): value is KycLog[] =>
+  Array.isArray(value) &&
+  value.every(
+    (v) =>
+      v &&
+      typeof v === "object" &&
+      typeof (v as any).status === "string" &&
+      typeof (v as any).at === "string" &&
+      typeof (v as any).by === "string"
+  );
+
 const KYCSection = () => {
   const { toast } = useToast();
   const { user } = useAuth();
@@ -49,9 +71,19 @@ const KYCSection = () => {
         }
 
         setKycStatus(data.kyc_status || 'pending');
-        // Safely parse kyc_documents and kyc_status_log
-        setKycDocs(Array.isArray(data.kyc_documents) ? data.kyc_documents : data.kyc_documents ? [data.kyc_documents] : []);
-        setKycLog(Array.isArray(data.kyc_status_log) ? data.kyc_status_log : data.kyc_status_log ? [data.kyc_status_log] : []);
+
+        // Safely decode possible values
+        let docs: KycDoc[] = [];
+        if (isKycDocArray(data.kyc_documents)) {
+          docs = data.kyc_documents;
+        }
+        setKycDocs(docs);
+
+        let logs: KycLog[] = [];
+        if (isKycLogArray(data.kyc_status_log)) {
+          logs = data.kyc_status_log;
+        }
+        setKycLog(logs);
       }
     };
     fetchStatus();
@@ -82,8 +114,10 @@ const KYCSection = () => {
       if (fetchError || !profile) throw new Error("Erreur de lecture profil après upload.");
 
       // Valeur safe
-      const oldDocs: KycDoc[] = Array.isArray(profile.kyc_documents) ? profile.kyc_documents : profile.kyc_documents ? profile.kyc_documents : [];
-      const oldLogs: KycLog[] = Array.isArray(profile.kyc_status_log) ? profile.kyc_status_log : profile.kyc_status_log ? profile.kyc_status_log : [];
+      let oldDocs: KycDoc[] = [];
+      let oldLogs: KycLog[] = [];
+      if (isKycDocArray(profile.kyc_documents)) oldDocs = profile.kyc_documents;
+      if (isKycLogArray(profile.kyc_status_log)) oldLogs = profile.kyc_status_log;
 
       const now = new Date().toISOString();
 
