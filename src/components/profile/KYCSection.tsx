@@ -5,6 +5,10 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Upload, Loader2, File as FileIcon } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { KycStatusBadge } from './KycStatusBadge';
+import { KycUploadArea } from './KycUploadArea';
+import { KycDocumentList, KycDoc } from './KycDocumentList';
+import { KycStatusLogList, KycLog } from './KycStatusLogList';
 
 interface KycDoc {
   name: string;
@@ -181,85 +185,17 @@ const KYCSection = () => {
           )}
           <div>
             <span className="font-bold">Statut KYC :</span>
-            <span
-              className={`ml-2 px-2 py-1 rounded transition-all duration-300 ${statusColor(
-                kycStatus || 'pending'
-              )}`}
-            >
-              {kycStatus === 'approved'
-                ? 'Validé'
-                : kycStatus === 'refused'
-                ? 'Refusé'
-                : 'En attente'}
-            </span>
+            <KycStatusBadge status={kycStatus} />
           </div>
           <p className="text-sm text-gray-600">
             Pour effectuer des transactions, vous devez vérifier votre identité en téléchargeant une pièce d'identité valide.
           </p>
-          <div className="flex items-center justify-center w-full">
-            <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer hover:bg-gray-50 relative">
-              {uploading && (
-                <div className="absolute inset-0 z-10 bg-white/70 flex items-center justify-center">
-                  <Loader2 className="animate-spin h-10 w-10 text-primary" />
-                </div>
-              )}
-              <div className="flex flex-col items-center justify-center pt-5 pb-6 pointer-events-none">
-                <Upload className="w-8 h-8 mb-4 text-gray-500" />
-                <p className="mb-2 text-sm text-gray-500">
-                  <span className="font-semibold">Cliquez pour télécharger</span> ou glissez et déposez
-                </p>
-                <p className="text-xs text-gray-500">Format accepté : PNG, JPG, PDF (max. 10MB)</p>
-              </div>
-              <input
-                type="file"
-                className="hidden"
-                accept="image/*,.pdf"
-                onChange={handleFileUpload}
-                disabled={uploading}
-              />
-            </label>
-          </div>
 
-          {/* Liste des documents déjà envoyés */}
-          {kycDocs.length > 0 && (
-            <div className="mt-2">
-              <div className="font-semibold mb-1">Documents envoyés :</div>
-              <div className="flex flex-col gap-1">
-                {kycDocs.map((doc, idx) => (
-                  <div key={doc.path || idx} className="flex items-center gap-2 text-xs bg-muted px-2 py-1 rounded">
-                    <FileIcon className="h-4 w-4 text-primary" />
-                    <span className="truncate">{doc.name}</span>
-                    <span className="text-gray-500">({new Date(doc.uploaded_at).toLocaleDateString()})</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
+          <KycUploadArea onFileUpload={handleFileUpload} uploading={uploading} />
 
-          {/* Log de statut KYC */}
-          {kycLog.length > 0 && (
-            <div className="mt-3">
-              <div className="font-semibold text-sm mb-1">Historique des statuts :</div>
-              <ul className="flex flex-col gap-1 text-xs">
-                {kycLog
-                  .slice()
-                  .reverse()
-                  .map((log, idx) => (
-                    <li key={idx}>
-                      <span className={`${statusColor(log.status)} px-2 py-0.5 rounded font-bold`}>
-                        {log.status === 'approved'
-                          ? 'Validé'
-                          : log.status === 'refused'
-                          ? 'Refusé'
-                          : 'En attente'}
-                      </span>
-                      <span className="ml-2">{new Date(log.at).toLocaleString()}</span>
-                      {log.reason && <span className="ml-1 text-gray-500">({log.reason})</span>}
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          )}
+          <KycDocumentList kycDocs={kycDocs} />
+
+          <KycStatusLogList logs={kycLog} />
         </div>
       </CardContent>
     </Card>
