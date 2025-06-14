@@ -27,21 +27,30 @@ const KYCSection = () => {
   const [kycStatus, setKycStatus] = useState<string | null>(null);
   const [kycDocs, setKycDocs] = useState<KycDoc[]>([]);
   const [kycLog, setKycLog] = useState<KycLog[]>([]);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   // Charger infos KYC existantes
   React.useEffect(() => {
     const fetchStatus = async () => {
+      setLoadError(null);
       if (user) {
         const { data, error } = await supabase
           .from('profiles')
           .select('kyc_status, kyc_documents, kyc_status_log')
           .eq('id', user.id)
           .maybeSingle();
-        if (data) {
-          setKycStatus(data.kyc_status || 'pending');
-          setKycDocs(Array.isArray(data.kyc_documents) ? data.kyc_documents : []);
-          setKycLog(Array.isArray(data.kyc_status_log) ? data.kyc_status_log : []);
+
+        if (error) {
+          setLoadError("Erreur lors de la récupération du profil : " + error.message);
+          return;
         }
+        if (!data) {
+          setLoadError("Profil inexistant ou informations de KYC manquantes.");
+          return;
+        }
+        setKycStatus(data.kyc_status || 'pending');
+        setKycDocs(Array.isArray(data.kyc_documents) ? data.kyc_documents : data.kyc_documents ? data.kyc_documents : []);
+        setKycLog(Array.isArray(data.kyc_status_log) ? data.kyc_status_log : data.kyc_status_log ? data.kyc_status_log : []);
       }
     };
     fetchStatus();
@@ -63,38 +72,44 @@ const KYCSection = () => {
       if (uploadError) throw uploadError;
 
       // 2. Récupération des anciens docs/logs
-      const { data: profile } = await supabase
+      const { data: profile, error: fetchError } = await supabase
         .from('profiles')
         .select('kyc_documents, kyc_status_log')
         .eq('id', user.id)
         .maybeSingle();
 
-      const documents: KycDoc[] = Array.isArray(profile?.kyc_documents) ? profile.kyc_documents : [];
-      const logs: KycLog[] = Array.isArray(profile?.kyc_status_log) ? profile.kyc_status_log : [];
+      if (fetchError || !profile) throw new Error("Erreur de lecture profil après upload.");
+
+      // Valeur safe
+      const oldDocs: KycDoc[] = Array.isArray(profile.kyc_documents) ? profile.kyc_documents : profile.kyc_documents ? profile.kyc_documents : [];
+      const oldLogs: KycLog[] = Array.isArray(profile.kyc_status_log) ? profile.kyc_status_log : profile.kyc_status_log ? profile.kyc_status_log : [];
 
       const now = new Date().toISOString();
 
       // 3. Ajout du nouveau document
       const newDoc: KycDoc = { name: file.name, path: filePath, uploaded_at: now };
-      const newDocs = [...documents, newDoc];
+      const newDocs: KycDoc[] = [...oldDocs, newDoc];
       const newLog: KycLog = { status: 'pending', at: now, by: 'user', reason: 'Document soumis' };
-      const newLogs = [...logs, newLog];
+      const newLogs: KycLog[] = [...oldLogs, newLog];
 
-      // 4. Mise à jour du profil
+      // 4. Sérialisation pour la DB : Supabase attend du pur JSON
+      const safeDocs = newDocs.map(d => ({ ...d }));
+      const safeLogs = newLogs.map(l => ({ ...l }));
+
       const { error: updateError } = await supabase
         .from('profiles')
         .update({
-          kyc_documents: newDocs,
+          kyc_documents: safeDocs,
           kyc_status: 'pending',
-          kyc_status_log: newLogs,
+          kyc_status_log: safeLogs,
         })
         .eq('id', user.id);
 
       if (updateError) throw updateError;
 
       setKycStatus('pending');
-      setKycDocs(newDocs);
-      setKycLog(newLogs);
+      setKycDocs(safeDocs);
+      setKycLog(safeLogs);
 
       toast({
         title: "Document téléchargé",
@@ -126,6 +141,9 @@ const KYCSection = () => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
+          {loadError && (
+            <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-2">{loadError}</div>
+          )}
           <div>
             <span className="font-bold">Statut KYC :</span>
             <span
@@ -173,7 +191,7 @@ const KYCSection = () => {
               <div className="font-semibold mb-1">Documents envoyés :</div>
               <div className="flex flex-col gap-1">
                 {kycDocs.map((doc, idx) => (
-                  <div key={doc.path} className="flex items-center gap-2 text-xs bg-muted px-2 py-1 rounded">
+                  <div key={doc.path || idx} className="flex items-center gap-2 text-xs bg-muted px-2 py-1 rounded">
                     <FileIcon className="h-4 w-4 text-primary" />
                     <span className="truncate">{doc.name}</span>
                     <span className="text-gray-500">({new Date(doc.uploaded_at).toLocaleDateString()})</span>
@@ -214,4 +232,3 @@ const KYCSection = () => {
 };
 
 export default KYCSection;
-
