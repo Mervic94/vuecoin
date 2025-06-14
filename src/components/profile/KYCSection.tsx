@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -48,9 +47,11 @@ const KYCSection = () => {
           setLoadError("Profil inexistant ou informations de KYC manquantes.");
           return;
         }
+
         setKycStatus(data.kyc_status || 'pending');
-        setKycDocs(Array.isArray(data.kyc_documents) ? data.kyc_documents : data.kyc_documents ? data.kyc_documents : []);
-        setKycLog(Array.isArray(data.kyc_status_log) ? data.kyc_status_log : data.kyc_status_log ? data.kyc_status_log : []);
+        // Safely parse kyc_documents and kyc_status_log
+        setKycDocs(Array.isArray(data.kyc_documents) ? data.kyc_documents : data.kyc_documents ? [data.kyc_documents] : []);
+        setKycLog(Array.isArray(data.kyc_status_log) ? data.kyc_status_log : data.kyc_status_log ? [data.kyc_status_log] : []);
       }
     };
     fetchStatus();

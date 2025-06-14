@@ -41,6 +41,7 @@ export type Database = {
           id: string
           kyc_documents: Json | null
           kyc_status: string | null
+          kyc_status_log: Json | null
           last_name: string | null
           updated_at: string | null
         }
@@ -51,6 +52,7 @@ export type Database = {
           id: string
           kyc_documents?: Json | null
           kyc_status?: string | null
+          kyc_status_log?: Json | null
           last_name?: string | null
           updated_at?: string | null
         }
@@ -61,6 +63,7 @@ export type Database = {
           id?: string
           kyc_documents?: Json | null
           kyc_status?: string | null
+          kyc_status_log?: Json | null
           last_name?: string | null
           updated_at?: string | null
         }
