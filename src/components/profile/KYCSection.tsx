@@ -1,27 +1,17 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Upload, Loader2, File as FileIcon } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { KycStatusBadge } from './KycStatusBadge';
 import { KycUploadArea } from './KycUploadArea';
 import { KycDocumentList, KycDoc } from './KycDocumentList';
 import { KycStatusLogList, KycLog } from './KycStatusLogList';
 
-interface KycDoc {
-  name: string;
-  path: string;
-  uploaded_at: string;
-}
-
-interface KycLog {
-  status: string;
-  at: string;
-  by: string;
-  reason?: string;
-}
+// SUPPRESSION des déclarations locales conflictuelles :
+// interface KycDoc { ... }
+// interface KycLog { ... }
 
 const isKycDocArray = (value: unknown): value is KycDoc[] =>
   Array.isArray(value) &&
@@ -54,7 +44,6 @@ const KYCSection = () => {
   const [kycLog, setKycLog] = useState<KycLog[]>([]);
   const [loadError, setLoadError] = useState<string | null>(null);
 
-  // Charger infos KYC existantes
   React.useEffect(() => {
     const fetchStatus = async () => {
       setLoadError(null);
@@ -117,7 +106,6 @@ const KYCSection = () => {
 
       if (fetchError || !profile) throw new Error("Erreur de lecture profil après upload.");
 
-      // Valeur safe
       let oldDocs: KycDoc[] = [];
       let oldLogs: KycLog[] = [];
       if (isKycDocArray(profile.kyc_documents)) oldDocs = profile.kyc_documents;
@@ -131,7 +119,6 @@ const KYCSection = () => {
       const newLog: KycLog = { status: 'pending', at: now, by: 'user', reason: 'Document soumis' };
       const newLogs: KycLog[] = [...oldLogs, newLog];
 
-      // 4. Sérialisation pour la DB : Supabase attend du pur JSON
       const safeDocs = newDocs.map(d => ({ ...d }));
       const safeLogs = newLogs.map(l => ({ ...l }));
 
@@ -166,13 +153,6 @@ const KYCSection = () => {
     }
   };
 
-  const statusColor = (status: string) =>
-    status === 'approved'
-      ? 'bg-green-200 text-green-800'
-      : status === 'refused'
-      ? 'bg-red-200 text-red-800'
-      : 'bg-yellow-100 text-yellow-700';
-
   return (
     <Card>
       <CardHeader>
@@ -203,3 +183,4 @@ const KYCSection = () => {
 };
 
 export default KYCSection;
+
