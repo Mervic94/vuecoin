@@ -3,11 +3,31 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { RefreshCw, Search } from 'lucide-react';
+import { RefreshCw, Search, CreditCard } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { paymentIcons } from '@/utils/paymentIcons';
+
+// Helper to render the payment icon as JSX (never as image src if not a string!)
+const getPaymentIcon = (code: string) => {
+  const icon = paymentIcons[code];
+  if (!icon) return <CreditCard className="h-5 w-5 text-primary" />;
+  // If string: it's an image path. If function/component: JSX.
+  if (typeof icon === "string") {
+    return (
+      <img
+        src={icon}
+        alt={code}
+        className="h-5 w-5 object-contain"
+        style={{ display: 'inline-block' }}
+      />
+    );
+  }
+  // Else it's a Lucide icon
+  const LucideIcon = icon as React.FC<{ className?: string }>;
+  return <LucideIcon className="h-5 w-5 text-primary" />;
+};
 
 const getStatusLabel = (status: string) => {
   switch (status) {
@@ -39,9 +59,7 @@ const getStatusColor = (status: string) => {
   }
 };
 
-interface DepositHistoryTableProps {}
-
-const DepositHistoryTable: React.FC<DepositHistoryTableProps> = () => {
+const DepositHistoryTable: React.FC = () => {
   const { user } = useAuth();
   const [search, setSearch] = useState('');
   const [localRefreshIndex, setLocalRefreshIndex] = useState(0);
@@ -129,15 +147,7 @@ const DepositHistoryTable: React.FC<DepositHistoryTableProps> = () => {
                   </td>
                   <td className="py-4 px-4 flex items-center gap-2">
                     <span className="w-6 h-6 inline-block">
-                      {deposit.payment_methods?.code && paymentIcons[deposit.payment_methods.code] ? (
-                        typeof paymentIcons[deposit.payment_methods.code] === "string" ? (
-                          <img
-                            src={paymentIcons[deposit.payment_methods.code]}
-                            alt={deposit.payment_methods?.name || "Méthode de paiement"}
-                            className="h-5 w-5 object-contain"
-                          />
-                        ) : null
-                      ) : null}
+                      {getPaymentIcon(deposit.payment_methods?.code)}
                     </span>
                     {deposit.payment_methods?.name || "-"}
                   </td>
