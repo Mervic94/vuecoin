@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -40,6 +39,43 @@ const DepositForm = () => {
       return;
     }
 
+    // On vérifie si Stripe est la méthode sélectionnée
+    const selectedPM = paymentMethods?.find((m) => m.id === selectedMethod);
+    if (selectedPM?.code === "stripe") {
+      try {
+        // Appel edge function Supabase
+        const { data, error } = await supabase.functions.invoke('create-payment', {
+          body: { amount: parseFloat(amount) },
+        });
+        if (error || !data?.url) {
+          toast({
+            title: "Erreur Stripe",
+            description: "Impossible d'initier le paiement.",
+            variant: "destructive"
+          });
+          return;
+        }
+        // Redirige vers Stripe Checkout
+        window.open(data.url, "_blank");
+        toast({
+          title: "Redirection Stripe",
+          description: "Un nouvel onglet s'ouvre pour finaliser le paiement.",
+        });
+        // Optionnel : reset les champs côté UI
+        setAmount('');
+        setSelectedMethod('');
+        return;
+      } catch (err) {
+        toast({
+          title: "Erreur Stripe",
+          description: "Échec de la communication avec Stripe.",
+          variant: "destructive"
+        });
+        return;
+      }
+    }
+
+    // Sinon, process de dépôt existant pour les autres méthodes
     try {
       const { error } = await supabase
         .from('transactions')
