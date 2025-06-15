@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -21,7 +22,6 @@ const DepositForm = () => {
         .from('payment_methods')
         .select('*')
         .eq('is_active', true);
-      
       if (error) throw error;
       return data;
     },
@@ -29,7 +29,6 @@ const DepositForm = () => {
 
   const handleDeposit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!user) {
       toast({
         title: "Erreur",
@@ -39,11 +38,11 @@ const DepositForm = () => {
       return;
     }
 
-    // On vérifie si Stripe est la méthode sélectionnée
     const selectedPM = paymentMethods?.find((m) => m.id === selectedMethod);
+
+    // === Stripe ===
     if (selectedPM?.code === "stripe") {
       try {
-        // Appel edge function Supabase
         const { data, error } = await supabase.functions.invoke('create-payment', {
           body: { amount: parseFloat(amount) },
         });
@@ -55,13 +54,11 @@ const DepositForm = () => {
           });
           return;
         }
-        // Redirige vers Stripe Checkout
         window.open(data.url, "_blank");
         toast({
           title: "Redirection Stripe",
           description: "Un nouvel onglet s'ouvre pour finaliser le paiement.",
         });
-        // Optionnel : reset les champs côté UI
         setAmount('');
         setSelectedMethod('');
         return;
@@ -75,7 +72,62 @@ const DepositForm = () => {
       }
     }
 
-    // Sinon, process de dépôt existant pour les autres méthodes
+    // === Kkiapay/Mobile Money & Fedapay/Mobile Money ===
+    if (
+      selectedPM?.code === "kkiapay" ||
+      selectedPM?.code === "mobile_money" ||
+      selectedPM?.code === "moov_money" ||
+      selectedPM?.code === "fedapay"
+    ) {
+      try {
+        // Enregistre la demande côté Supabase
+        const { error } = await supabase
+          .from('transactions')
+          .insert({
+            user_id: user.id,
+            amount: parseFloat(amount),
+            type: 'deposit',
+            currency: 'XOF',
+            payment_method_id: selectedPM.id,
+            status: 'pending'
+          });
+
+        if (error) throw error;
+
+        let infoTitle = "Demande envoyée";
+        let infoDescription = "Votre demande de dépôt a été enregistrée. Un agent vous contactera pour le paiement Mobile Money.";
+        if (selectedPM.code === "kkiapay") {
+          infoTitle = "Dépôt Kkiapay";
+          infoDescription = "Votre demande de dépôt via Kkiapay a été enregistrée. Vous recevrez les instructions dans votre espace utilisateur.";
+        }
+        if (selectedPM.code === "fedapay") {
+          infoTitle = "Dépôt Fedapay";
+          infoDescription = "Votre demande de dépôt via Fedapay a été enregistrée. Vous recevrez les instructions dans votre espace utilisateur.";
+        }
+        if (selectedPM.code === "moov_money" || selectedPM.code === "mobile_money") {
+          infoTitle = "Dépôt Mobile Money";
+          infoDescription = "Votre demande Mobile Money est en attente. Un opérateur validera le paiement manuellement.";
+        }
+
+        toast({
+          title: infoTitle,
+          description: infoDescription,
+        });
+
+        setAmount('');
+        setSelectedMethod('');
+        return;
+      } catch (error) {
+        toast({
+          title: "Erreur du dépôt",
+          description: "Une erreur est survenue avec le dépôt Mobile Money.",
+          variant: "destructive"
+        });
+        return;
+      }
+    }
+
+    // === Méthodes classiques autres : ajoute une transaction en pending ===
     try {
       const { error } = await supabase
         .from('transactions')
@@ -121,7 +173,6 @@ const DepositForm = () => {
           className="transition-colors duration-200 focus:border-[#f1c40f] focus:ring-[#f1c40f]"
         />
       </div>
-
       <div className="space-y-2">
         <label className="text-sm font-medium">Méthode de paiement</label>
         <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
@@ -146,7 +197,6 @@ const DepositForm = () => {
           ))}
         </div>
       </div>
-
       <Button 
         type="submit" 
         className="w-full transition-colors duration-200 hover:bg-[#f1c40f]" 
@@ -159,3 +209,4 @@ const DepositForm = () => {
 };
 
 export default DepositForm;
+
