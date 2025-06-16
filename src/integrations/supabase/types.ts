@@ -9,6 +9,33 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      login_attempts: {
+        Row: {
+          attempted_at: string | null
+          id: string
+          ip_address: unknown | null
+          success: boolean
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          attempted_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          success: boolean
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          attempted_at?: string | null
+          id?: string
+          ip_address?: unknown | null
+          success?: boolean
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       payment_methods: {
         Row: {
           code: string
@@ -35,36 +62,69 @@ export type Database = {
       }
       profiles: {
         Row: {
+          account_locked_until: string | null
+          address_line1: string | null
+          address_line2: string | null
+          city: string | null
+          country: string | null
           created_at: string | null
+          date_of_birth: string | null
           email: string | null
+          failed_login_attempts: number | null
           first_name: string | null
           id: string
           kyc_documents: Json | null
+          kyc_level: number | null
           kyc_status: string | null
           kyc_status_log: Json | null
+          last_login_at: string | null
           last_name: string | null
+          phone_number: string | null
+          postal_code: string | null
           updated_at: string | null
         }
         Insert: {
+          account_locked_until?: string | null
+          address_line1?: string | null
+          address_line2?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string | null
+          date_of_birth?: string | null
           email?: string | null
+          failed_login_attempts?: number | null
           first_name?: string | null
           id: string
           kyc_documents?: Json | null
+          kyc_level?: number | null
           kyc_status?: string | null
           kyc_status_log?: Json | null
+          last_login_at?: string | null
           last_name?: string | null
+          phone_number?: string | null
+          postal_code?: string | null
           updated_at?: string | null
         }
         Update: {
+          account_locked_until?: string | null
+          address_line1?: string | null
+          address_line2?: string | null
+          city?: string | null
+          country?: string | null
           created_at?: string | null
+          date_of_birth?: string | null
           email?: string | null
+          failed_login_attempts?: number | null
           first_name?: string | null
           id?: string
           kyc_documents?: Json | null
+          kyc_level?: number | null
           kyc_status?: string | null
           kyc_status_log?: Json | null
+          last_login_at?: string | null
           last_name?: string | null
+          phone_number?: string | null
+          postal_code?: string | null
           updated_at?: string | null
         }
         Relationships: []
@@ -112,6 +172,36 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_2fa: {
+        Row: {
+          backup_codes: string[] | null
+          created_at: string | null
+          enabled_at: string | null
+          id: string
+          is_enabled: boolean | null
+          secret: string
+          user_id: string | null
+        }
+        Insert: {
+          backup_codes?: string[] | null
+          created_at?: string | null
+          enabled_at?: string | null
+          id?: string
+          is_enabled?: boolean | null
+          secret: string
+          user_id?: string | null
+        }
+        Update: {
+          backup_codes?: string[] | null
+          created_at?: string | null
+          enabled_at?: string | null
+          id?: string
+          is_enabled?: boolean | null
+          secret?: string
+          user_id?: string | null
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {
