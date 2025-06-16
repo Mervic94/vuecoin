@@ -6,20 +6,23 @@ import { ExternalLink } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import PriceChart from '@/components/exchange/PriceChart';
 import MarketTable from '@/components/exchange/MarketTable';
-import TradeForm from '@/components/exchange/TradeForm';
 import WalletOverview from '@/components/exchange/WalletOverview';
+import OrderBook from '@/components/exchange/OrderBook';
+import TradingDashboard from '@/components/exchange/TradingDashboard';
+import RealtimePrice from '@/components/exchange/RealtimePrice';
+import NotificationCenter from '@/components/notifications/NotificationCenter';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const Exchange = () => {
   const { toast } = useToast();
 
-  const handleTrade = (tradeType: string, amount: number, currency: string) => {
+  const handleTrade = (tradeType: string, orderType: string, amount: number, price?: number) => {
+    const priceText = price ? ` à ${price}$` : ' au prix du marché';
+    
     toast({
-      title: 'Transaction réussie',
-      description: `${tradeType === 'buy' ? 'Achat' : 'Vente'} de ${amount} VC ${
-        tradeType === 'buy' ? 'avec' : 'contre'
-      } ${currency === 'Bitcoin' ? '0.00041820 BTC' : currency === 'Ethereum' ? '0.00769 ETH' : '0.0965 SOL'}`,
+      title: 'Ordre placé avec succès',
+      description: `${orderType.charAt(0).toUpperCase() + orderType.slice(1)} ${tradeType === 'buy' ? 'achat' : 'vente'} de ${amount} VC${priceText}`,
     });
   };
 
@@ -27,14 +30,13 @@ const Exchange = () => {
     <div className="min-h-screen flex flex-col bg-[#f1f5f9] text-[#334155]">
       <Header />
       
-      {/* Navigation secondaire */}
+      {/* Navigation secondaire avec notifications */}
       <nav className="bg-primary text-white shadow-md">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Logo className="text-white" />
           <div className="flex items-center gap-4">
-            <div className="bg-primary-dark px-3 py-1 rounded-md font-medium">
-              VC: 2.45 $
-            </div>
+            <RealtimePrice />
+            <NotificationCenter />
             <Button variant="ghost" size="icon" className="text-white hover:bg-white/20">
               <ExternalLink size={20} />
             </Button>
@@ -44,16 +46,21 @@ const Exchange = () => {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-8 flex-1">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column - Chart and Market Table */}
-          <div className="lg:col-span-2">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Left Column - Chart */}
+          <div className="lg:col-span-2 space-y-6">
             <PriceChart />
             <MarketTable />
           </div>
 
+          {/* Middle Column - Order Book */}
+          <div className="space-y-6">
+            <OrderBook />
+          </div>
+
           {/* Right Column - Trading + Wallet */}
           <div className="space-y-6">
-            <TradeForm onTrade={handleTrade} />
+            <TradingDashboard onTrade={handleTrade} />
             <WalletOverview />
           </div>
         </div>
