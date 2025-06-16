@@ -10,9 +10,9 @@ import TwoFactorAuth from './TwoFactorAuth';
 
 interface LoginAttempt {
   id: string;
-  attempted_at: string;
+  attempted_at: string | null;
   success: boolean;
-  ip_address: string | null;
+  ip_address: unknown;
   user_agent: string | null;
 }
 
@@ -32,10 +32,7 @@ const SecurityDashboard = () => {
         .limit(10);
       
       if (error) throw error;
-      return data?.map(attempt => ({
-        ...attempt,
-        ip_address: attempt.ip_address || 'Non disponible'
-      })) || [];
+      return data || [];
     },
     enabled: !!user
   });
@@ -47,6 +44,11 @@ const SecurityDashboard = () => {
   }, [attempts]);
 
   if (!user) return null;
+
+  const formatIpAddress = (ip: unknown): string => {
+    if (ip === null || ip === undefined) return 'Non disponible';
+    return String(ip);
+  };
 
   return (
     <div className="space-y-6">
@@ -121,13 +123,13 @@ const SecurityDashboard = () => {
                         {attempt.success ? 'Connexion réussie' : 'Tentative échouée'}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {new Date(attempt.attempted_at).toLocaleString('fr-FR')}
+                        {attempt.attempted_at ? new Date(attempt.attempted_at).toLocaleString('fr-FR') : 'Date inconnue'}
                       </p>
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="text-xs text-muted-foreground">
-                      IP: {attempt.ip_address}
+                      IP: {formatIpAddress(attempt.ip_address)}
                     </p>
                   </div>
                 </div>
