@@ -1,169 +1,285 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { Bell, X, CheckCircle, AlertCircle, Info } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Bell, Settings, Check, X, AlertTriangle, Info, TrendingUp } from 'lucide-react';
 
 interface Notification {
   id: string;
-  type: 'success' | 'warning' | 'info' | 'error';
+  type: 'price' | 'security' | 'trade' | 'system';
   title: string;
   message: string;
-  timestamp: Date;
+  timestamp: string;
   read: boolean;
+  priority: 'low' | 'medium' | 'high';
 }
 
+const notifications: Notification[] = [
+  {
+    id: '1',
+    type: 'price',
+    title: 'Alerte de prix VueCoin',
+    message: 'VueCoin a atteint votre prix cible de $2.50',
+    timestamp: '2024-06-19 15:30',
+    read: false,
+    priority: 'high'
+  },
+  {
+    id: '2',
+    type: 'trade',
+    title: 'Ordre exécuté',
+    message: 'Votre ordre d\'achat de 100 VC a été exécuté',
+    timestamp: '2024-06-19 14:45',
+    read: false,
+    priority: 'medium'
+  },
+  {
+    id: '3',
+    type: 'security',
+    title: 'Nouvelle connexion',
+    message: 'Connexion détectée depuis Paris, France',
+    timestamp: '2024-06-19 12:20',
+    read: true,
+    priority: 'medium'
+  },
+  {
+    id: '4',
+    type: 'system',
+    title: 'Maintenance programmée',
+    message: 'Maintenance système prévue le 20/06 à 2h00',
+    timestamp: '2024-06-19 10:00',
+    read: true,
+    priority: 'low'
+  }
+];
+
 const NotificationCenter = () => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notificationList, setNotificationList] = useState(notifications);
   const [isOpen, setIsOpen] = useState(false);
-  const { toast } = useToast();
 
-  useEffect(() => {
-    // Simuler des notifications en temps réel
-    const interval = setInterval(() => {
-      const notificationTypes = [
-        {
-          type: 'success' as const,
-          title: 'Transaction confirmée',
-          message: 'Votre achat de 50 VC a été confirmé'
-        },
-        {
-          type: 'info' as const,
-          title: 'Mise à jour du prix',
-          message: 'VC a augmenté de 3.2% aujourd\'hui'
-        },
-        {
-          type: 'warning' as const,
-          title: 'Limite de transaction',
-          message: 'Vous approchez de votre limite quotidienne'
-        }
-      ];
-
-      const randomNotification = notificationTypes[Math.floor(Math.random() * notificationTypes.length)];
-      
-      const newNotification: Notification = {
-        id: Date.now().toString(),
-        ...randomNotification,
-        timestamp: new Date(),
-        read: false
-      };
-
-      setNotifications(prev => [newNotification, ...prev.slice(0, 4)]); // Garder seulement 5 notifications
-
-      // Afficher aussi un toast
-      toast({
-        title: randomNotification.title,
-        description: randomNotification.message,
-      });
-    }, 15000); // Nouvelle notification toutes les 15 secondes
-
-    return () => clearInterval(interval);
-  }, [toast]);
+  const unreadCount = notificationList.filter(n => !n.read).length;
 
   const markAsRead = (id: string) => {
-    setNotifications(prev => prev.map(notif => 
-      notif.id === id ? { ...notif, read: true } : notif
-    ));
+    setNotificationList(prev => 
+      prev.map(n => n.id === id ? { ...n, read: true } : n)
+    );
   };
 
-  const removeNotification = (id: string) => {
-    setNotifications(prev => prev.filter(notif => notif.id !== id));
+  const markAllAsRead = () => {
+    setNotificationList(prev => 
+      prev.map(n => ({ ...n, read: true }))
+    );
   };
 
-  const unreadCount = notifications.filter(n => !n.read).length;
+  const deleteNotification = (id: string) => {
+    setNotificationList(prev => prev.filter(n => n.id !== id));
+  };
 
-  const getIcon = (type: string) => {
+  const getNotificationIcon = (type: string) => {
     switch (type) {
-      case 'success':
-        return <CheckCircle className="h-4 w-4 text-green-600" />;
-      case 'warning':
-        return <AlertCircle className="h-4 w-4 text-yellow-600" />;
-      case 'error':
-        return <AlertCircle className="h-4 w-4 text-red-600" />;
+      case 'price':
+        return <TrendingUp className="h-4 w-4 text-green-600" />;
+      case 'security':
+        return <AlertTriangle className="h-4 w-4 text-orange-600" />;
+      case 'trade':
+        return <Check className="h-4 w-4 text-blue-600" />;
+      case 'system':
+        return <Info className="h-4 w-4 text-gray-600" />;
       default:
-        return <Info className="h-4 w-4 text-blue-600" />;
+        return <Bell className="h-4 w-4 text-gray-600" />;
     }
   };
 
+  const getPriorityColor = (priority: string, read: boolean) => {
+    if (read) return 'border-gray-200';
+    switch (priority) {
+      case 'high': return 'border-red-300 bg-red-50';
+      case 'medium': return 'border-yellow-300 bg-yellow-50';
+      case 'low': return 'border-blue-300 bg-blue-50';
+      default: return 'border-gray-300';
+    }
+  };
+
+  const filterNotifications = (type?: string) => {
+    if (!type) return notificationList;
+    return notificationList.filter(n => n.type === type);
+  };
+
   return (
-    <div className="relative">
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={() => setIsOpen(!isOpen)}
-        className="relative"
-      >
-        <Bell className="h-5 w-5" />
-        {unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-            {unreadCount}
-          </span>
-        )}
-      </Button>
-
-      {isOpen && (
-        <Card className="absolute right-0 top-12 w-80 max-h-96 overflow-y-auto z-50 shadow-lg">
-          <div className="p-4 border-b">
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
+      <PopoverTrigger asChild>
+        <Button variant="outline" size="icon" className="relative">
+          <Bell className="h-4 w-4" />
+          {unreadCount > 0 && (
+            <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+              {unreadCount}
+            </Badge>
+          )}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-80 md:w-96 p-0" align="end">
+        <Card className="border-0 shadow-none">
+          <CardHeader className="pb-3">
             <div className="flex items-center justify-between">
-              <h3 className="font-semibold">Notifications</h3>
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsOpen(false)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-
-          <div className="max-h-64 overflow-y-auto">
-            {notifications.length === 0 ? (
-              <div className="p-4 text-center text-muted-foreground">
-                Aucune notification
+              <CardTitle className="text-lg">Notifications</CardTitle>
+              <div className="flex items-center space-x-2">
+                {unreadCount > 0 && (
+                  <Button variant="ghost" size="sm" onClick={markAllAsRead}>
+                    Tout marquer lu
+                  </Button>
+                )}
+                <Button variant="ghost" size="icon">
+                  <Settings className="h-4 w-4" />
+                </Button>
               </div>
-            ) : (
-              notifications.map((notification) => (
-                <div
-                  key={notification.id}
-                  className={`p-4 border-b hover:bg-gray-50 cursor-pointer ${
-                    !notification.read ? 'bg-blue-50' : ''
-                  }`}
-                  onClick={() => markAsRead(notification.id)}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-3 flex-1">
-                      {getIcon(notification.type)}
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">{notification.title}</p>
-                        <p className="text-xs text-muted-foreground">{notification.message}</p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {notification.timestamp.toLocaleTimeString('fr-FR', {
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          })}
-                        </p>
+            </div>
+          </CardHeader>
+          <CardContent className="p-0">
+            <Tabs defaultValue="all" className="w-full">
+              <TabsList className="grid w-full grid-cols-4 mx-4 mb-4">
+                <TabsTrigger value="all">Toutes</TabsTrigger>
+                <TabsTrigger value="price">Prix</TabsTrigger>
+                <TabsTrigger value="trade">Trading</TabsTrigger>
+                <TabsTrigger value="security">Sécurité</TabsTrigger>
+              </TabsList>
+
+              <div className="max-h-96 overflow-y-auto">
+                <TabsContent value="all" className="m-0">
+                  <div className="space-y-1">
+                    {filterNotifications().map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={`p-3 border-l-4 hover:bg-muted/50 transition-colors cursor-pointer ${getPriorityColor(notification.priority, notification.read)}`}
+                        onClick={() => markAsRead(notification.id)}
+                      >
+                        <div className="flex items-start justify-between">
+                          <div className="flex items-start space-x-3 flex-1">
+                            {getNotificationIcon(notification.type)}
+                            <div className="min-w-0 flex-1">
+                              <p className={`text-sm font-medium ${notification.read ? 'text-muted-foreground' : 'text-foreground'}`}>
+                                {notification.title}
+                              </p>
+                              <p className="text-xs text-muted-foreground mt-1">
+                                {notification.message}
+                              </p>
+                              <p className="text-xs text-muted-foreground mt-2">
+                                {notification.timestamp}
+                              </p>
+                            </div>
+                          </div>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteNotification(notification.id);
+                            }}
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        removeNotification(notification.id);
-                      }}
-                      className="h-6 w-6"
-                    >
-                      <X className="h-3 w-3" />
-                    </Button>
+                    ))}
                   </div>
-                </div>
-              ))
+                </TabsContent>
+
+                <TabsContent value="price" className="m-0">
+                  <div className="space-y-1">
+                    {filterNotifications('price').map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={`p-3 border-l-4 hover:bg-muted/50 transition-colors cursor-pointer ${getPriorityColor(notification.priority, notification.read)}`}
+                        onClick={() => markAsRead(notification.id)}
+                      >
+                        <div className="flex items-start space-x-3">
+                          {getNotificationIcon(notification.type)}
+                          <div className="min-w-0 flex-1">
+                            <p className={`text-sm font-medium ${notification.read ? 'text-muted-foreground' : 'text-foreground'}`}>
+                              {notification.title}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {notification.message}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-2">
+                              {notification.timestamp}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="trade" className="m-0">
+                  <div className="space-y-1">
+                    {filterNotifications('trade').map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={`p-3 border-l-4 hover:bg-muted/50 transition-colors cursor-pointer ${getPriorityColor(notification.priority, notification.read)}`}
+                        onClick={() => markAsRead(notification.id)}
+                      >
+                        <div className="flex items-start space-x-3">
+                          {getNotificationIcon(notification.type)}
+                          <div className="min-w-0 flex-1">
+                            <p className={`text-sm font-medium ${notification.read ? 'text-muted-foreground' : 'text-foreground'}`}>
+                              {notification.title}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {notification.message}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-2">
+                              {notification.timestamp}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="security" className="m-0">
+                  <div className="space-y-1">
+                    {filterNotifications('security').map((notification) => (
+                      <div
+                        key={notification.id}
+                        className={`p-3 border-l-4 hover:bg-muted/50 transition-colors cursor-pointer ${getPriorityColor(notification.priority, notification.read)}`}
+                        onClick={() => markAsRead(notification.id)}
+                      >
+                        <div className="flex items-start space-x-3">
+                          {getNotificationIcon(notification.type)}
+                          <div className="min-w-0 flex-1">
+                            <p className={`text-sm font-medium ${notification.read ? 'text-muted-foreground' : 'text-foreground'}`}>
+                              {notification.title}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {notification.message}
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-2">
+                              {notification.timestamp}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </TabsContent>
+              </div>
+            </Tabs>
+
+            {notificationList.length === 0 && (
+              <div className="text-center py-8 text-muted-foreground">
+                <Bell className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                <p>Aucune notification</p>
+              </div>
             )}
-          </div>
+          </CardContent>
         </Card>
-      )}
-    </div>
+      </PopoverContent>
+    </Popover>
   );
 };
 
