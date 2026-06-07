@@ -8,6 +8,7 @@ import LoginAttemptLogger from "@/components/security/LoginAttemptLogger";
 import SupportChat from "@/components/support/SupportChat";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import Exchange from "./pages/Exchange";
 import Funding from "./pages/Funding";
 import Transactions from "./pages/Transactions";
